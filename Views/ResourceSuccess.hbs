@@ -1,0 +1,29 @@
+<h1>{{title}}</h1>
+
+<p>Resource "<strong>{{resource.title}}</strong>" has been successfully uploaded!</p>
+<p><strong>Subject:</strong> {{resource.subject}}</p>
+<p><strong>Description:</strong> {{resource.description}}</p>
+<p><strong>Tags:</strong> 
+   {{#each resource.tags}} 
+     {{this}} 
+     {{#unless @last}}, {{/unless}} <!-- Add a comma between tags, except for the last one -->
+   {{/each}}
+</p>
+<p><strong>Access Level:</strong> {{resource.accessLevel}}</p>
+
+<div>
+    <!-- View the uploaded PDF file -->
+    <a href="{{resource.fileUrl}}" target="_blank">View Resource PDF</a>
+</div>
+
+<div>
+    <!-- Download the uploaded PDF file -->
+    <a href="{{resource.fileUrl}}" download class="btn">Download Resource PDF</a> <!-- Added download attribute -->
+</div>
+
+<div>
+    <!-- Display the uploaded image -->
+    <img src="{{resource.fileImage}}" alt="Resource Image" />
+</div>
+
+<a href="/resource/add" class="btn">Upload Another Resource</a>

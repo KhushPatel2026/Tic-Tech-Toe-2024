@@ -1,0 +1,25 @@
+<h2>{{title}}</h2>
+
+<main>
+    <h2>Available Resources</h2>
+    
+    {{#if resources.length}}
+        <ul>
+            {{#each resources}}
+                <li>
+                    <h3>{{this.title}}</h3>
+                    <p><strong>Subject:</strong> {{this.subject}}</p>
+                    <p><strong>Description:</strong> {{this.description}}</p>
+                    <p><strong>Uploaded By:</strong> {{this.uploadedBy.username}}</p>
+                    <p><strong>Tags:</strong> {{#each this.tags}} {{this}} {{/each}}</p>
+                    <p><strong>Views:</strong> {{this.views}} | <strong>Downloads:</strong> {{this.downloads}}</p>
+                    <div>
+                        <a href="/resource/resource/{{this._id}}">View Resource</a>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No resources available at the moment.</p>
+    {{/if}}
+</main>

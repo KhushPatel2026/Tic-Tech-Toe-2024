@@ -1,10 +1,13 @@
 const express = require("express");
+const dontenv = require("dotenv").config();
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/User");
 const authRoutes = require("./routes/authRoute");
+const resourceRoutes = require("./routes/resourceRoute");
+const ratingRoutes = require("./routes/ratingRoute");
 const hbs = require("hbs");
 const path = require("path");
 
@@ -26,6 +29,8 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const static_path = path.join(__dirname, "public");
 app.use(express.static(static_path));
@@ -64,6 +69,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", authRoutes);
+app.use("/resource", resourceRoutes);
+app.use('/ratings', ratingRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

@@ -1,0 +1,43 @@
+<h1>{{resource.title}}</h1>
+<p><strong>Description:</strong> {{resource.description}}</p>
+<p><strong>Subject:</strong> {{resource.subject}}</p>
+<p><strong>Tags:</strong> 
+    {{#each resource.tags}} 
+        {{this}} {{#unless @last}}, {{/unless}} 
+    {{/each}}
+</p>
+<p><strong>Access Level:</strong> {{resource.accessLevel}}</p>
+<p><strong>Views:</strong> {{resource.views}}</p>
+<p><strong>Downloads:</strong> {{resource.downloads}}</p>
+<p><strong>Average Rating:</strong> {{resource.averageRating}}</p>
+
+<div>
+    <a href="/resource/resource/{{resource._id}}/download" class="btn">Download Resource PDF</a>
+</div>
+<div>
+    <img src="{{resource.fileImage}}" alt="Resource Image" />
+</div>
+
+<h2>Ratings</h2>
+{{#if resource.ratings.length}}
+    <ul>
+        {{#each resource.ratings}}
+            <li>
+                <strong>{{user.name}}</strong> rated it {{rating}}: {{comment}} <!-- Changed 'username' to 'name' -->
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No ratings yet for this resource.</p>
+{{/if}}
+
+<h3>Add/Update Your Rating</h3>
+<form action="/ratings/{{resource._id}}/rate" method="POST">
+    <label for="rating">Rating (1-5):</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" required>
+    
+    <label for="comment">Comment:</label>
+    <textarea id="comment" name="comment"></textarea>
+    
+    <button type="submit">Submit Rating</button>
+</form>
