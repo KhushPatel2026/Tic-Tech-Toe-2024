@@ -52,22 +52,14 @@
             <input type="password" class="input" placeholder="Enter your Password" type="password" id="password" name="password" required />
         </div>
 
-        <div class="flex-column">
-            <label for="role">Role:</label>
+        <div class="flex-column options">
+            <label for="role">Role</label>
             <select id="role" name="role" required>
                 <option value="student">Student</option>
                 <option value="teacher">Teacher</option>
                 <option value="admin">Admin</option>
             </select>
         </div>
-
-        <div class="flex-row">
-            <div>
-                <input type="checkbox">
-                <label>Remember me</label>
-            </div>
-        </div>
-
         <button class="button-submit" type="submit">Sign Up</button>
         <p class="p">Already have an account? <a href="/login"><span class="span">Log in</span></a></p>
     </form>
@@ -80,7 +72,6 @@
 body, html {
     height: 100%;
     margin: 0;
-    display: flex;
     justify-content: center; /* Horizontally center */
     align-items: center;     /* Vertically center */
     background-color: #f0f0f0; /* Optional background color */
@@ -120,6 +111,13 @@ body, html {
   font-weight: 600;
 }
 
+select{
+  margin-top: 4px;
+}
+.options{
+  margin-top: 5px;
+  display: grid;
+}
 .inputForm {
   border: 1.5px solid #ecedec;
   border-radius: 10px;
