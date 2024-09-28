@@ -37,6 +37,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const static_path = path.join(__dirname, "public");
 app.use(express.static(static_path));
+app.use('/uploads', express.static('uploads'));
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 hbs.registerPartials(path.join(__dirname, "views", "partials"));

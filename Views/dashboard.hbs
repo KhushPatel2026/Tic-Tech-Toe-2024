@@ -473,14 +473,17 @@ body.sidebar-hidden .main-layout .sidebar {
 
           <div class="link-section">
             <h4 class="section-title">For you</h4>
-            <a href="#" class="link-item">
+            <a href="/resource/getSuggestedBooks" class="link-item">
               <i class="uil uil-user-square"></i> Suggested for you
             </a>
-            <a href="#" class="link-item">
+            <a href="/resource/getMostViewedBooks" class="link-item">
               <i class="uil uil-fire"></i> Popular 
             </a>
-            <a href="#" class="link-item">
+            <a href="/resource/getLatestBooks" class="link-item">
               <i class="uil uil-tag"></i> New Arrival
+            </a>
+            <a href="/resource/getMostDownloadedBooks" class="link-item">
+              <i class="uil uil-save"></i> Most Downloaded
             </a>
           </div>
           <div class="section-separator"></div>
@@ -516,7 +519,7 @@ body.sidebar-hidden .main-layout .sidebar {
 {{#each resources}}
 <a href="/resource/resource/{{this._id}}" class="video-card">
    <div class="thumbnail-container">
-      <img src="{{this.fileImage}}" alt="Video Thumbnail" class="thumbnail">
+      <img src="/{{this.fileImage}}" alt="Video Thumbnail" class="thumbnail">
       <p class="duration"><i class="uil uil-star"></i> {{this.averageRating}}</p> <!-- Rating -->
    </div>
    <div class="video-info">

@@ -167,3 +167,140 @@ exports.uploadResource = async (req, res) => {
         });
     }
 };
+
+const generateRecommendations = (user, allResources) => {
+    const userPreferences = user.preferences ? user.preferences.split(',') : [];
+    
+    const preferenceMatches = allResources.map(resource => ({
+        resource,
+        score: matchUserPreferences(userPreferences, resource.tags) +
+               scoreByLikesBookmarks(user, resource) +
+               scoreByPopularity(resource) +
+               scoreByDate(resource)
+    }));
+
+    preferenceMatches.sort((a, b) => b.score - a.score);
+
+    const scoredResourceIds = new Set(preferenceMatches.map(rec => rec.resource._id));
+
+    const unscoredResources = allResources.filter(resource => !scoredResourceIds.has(resource._id));
+
+    return [...preferenceMatches.map(rec => rec.resource), ...unscoredResources];
+};
+
+const matchUserPreferences = (userPreferences, resourceTags) => {
+    let score = 0;
+    resourceTags.forEach(tag => {
+        if (userPreferences.includes(tag)) {
+            score += 5;
+        }
+    });
+    return score;
+};
+
+const scoreByLikesBookmarks = (user, resource) => {
+    let score = 0;
+    
+    if (user.likes.includes(resource._id)) {
+        score += 4;
+    }
+    if (user.bookmarks.includes(resource._id)) {
+        score += 3;
+    }
+
+    return score;
+};
+
+const scoreByPopularity = (resource) => {
+    const score = resource.views * 1 + resource.downloads * 2;
+    return score;
+};
+
+const scoreByDate = (resource) => {
+    const resourceDate = new Date(resource.createdAt);
+    const now = new Date();
+    
+    const diffInDays = Math.floor((now - resourceDate) / (1000 * 60 * 60 * 24));
+    
+    return Math.max(1 - diffInDays * 0.1, 0);
+};
+
+exports.getSuggestedBooks = async (req, res) => {
+    try {
+        const allResources = await Resource.find({ accessLevel: 'public' });
+        const recommendedResources = generateRecommendations(req.user, allResources);
+        const userLikes = req.user.likes.map(like => like.toString());
+        
+        const resourcesWithLikes = recommendedResources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+        
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithLikes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
+};
+
+exports.getLatestBooks = async (req, res) => {
+    try {
+        const resources = await Resource.find({ accessLevel: 'public' })
+            .sort({ createdAt: -1 }) 
+            .limit(10);
+        
+        const userLikes = req.user.likes.map(like => like.toString());
+        
+        const resourcesWithLikes = resources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+        
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithLikes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
+};
+
+exports.getMostViewedBooks = async (req, res) => {
+    try {
+        const resources = await Resource.find({ accessLevel: 'public' })
+            .sort({ views: -1 })  
+            .limit(10);
+        
+        const userLikes = req.user.likes.map(like => like.toString());
+        
+        const resourcesWithLikes = resources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+        
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithLikes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
+};
+
+exports.getMostDownloadedBooks = async (req, res) => {
+    try {
+        const resources = await Resource.find({ accessLevel: 'public' })
+            .sort({ downloads: -1 })  
+            .limit(10);
+        
+        const userLikes = req.user.likes.map(like => like.toString());
+        
+        const resourcesWithLikes = resources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+        
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithLikes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
+};
+
+
