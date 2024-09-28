@@ -3,17 +3,18 @@ const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  emailid: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  profilePicture: { type: String },
-  preferences: {
-    subjects: [{ type: String }],
-    resourceTypes: [{ type: String }]
+  adminApproved: {type: Boolean, required: true},
+  role: {
+    type: String,
+    enum: ['student', 'teacher', 'admin'],  // Define different roles
+    default: 'student',
+    required: true
   },
-  uploadedResources: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
+  preferences: {type: String},
   bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
-  ratingsGiven: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }]
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {

@@ -1,0 +1,43 @@
+<h1>Upload a New Resource</h1>
+        <form action="/resource/add/upload" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">Resource Title</label>
+                <input type="text" id="title" name="title" required placeholder="Enter the resource title">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" placeholder="Enter a description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" name="subject" required placeholder="Enter the subject">
+            </div>
+
+            <div class="form-group">
+                <label for="tags">Tags (comma-separated)</label>
+                <input type="text" id="tags" name="tags" placeholder="e.g., Math, Science, History">
+            </div>
+
+            <div class="form-group">
+                <label for="accessLevel">Access Level</label>
+                <select id="accessLevel" name="accessLevel">
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                    <option value="restricted">Restricted</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="pdfFile">Upload PDF File</label>
+                <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required>
+            </div>
+
+            <div class="form-group">
+                <label for="imageFile">Upload Cover Image</label>
+                <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+            </div>
+
+            <button type="submit" class="btn">Upload Resource</button>
+        </form>
