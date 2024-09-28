@@ -11,7 +11,7 @@ exports.renderRegisterForm = (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    const adminApproved = false;  
+    let adminApproved = false;  
     if(role == "student"){
       adminApproved = true;
     }

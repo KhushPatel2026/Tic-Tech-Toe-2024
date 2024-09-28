@@ -11,9 +11,12 @@
 <p><strong>Downloads:</strong> {{resource.downloads}}</p>
 <p><strong>Average Rating:</strong> {{resource.averageRating}}</p>
 
+{{#if isPublic}}
 <div>
     <a href="/resource/resource/{{resource._id}}/download" class="btn">Download Resource PDF</a>
 </div>
+{{/if}}
+
 <div>
     <img src="{{resource.fileImage}}" alt="Resource Image" />
 </div>
@@ -23,12 +26,23 @@
     <ul>
         {{#each resource.ratings}}
             <li>
-                <strong>{{user.name}}</strong> rated it {{rating}}: {{comment}} <!-- Changed 'username' to 'name' -->
+                <strong>{{this.user.name}}</strong> rated it {{this.rating}}: {{this.comment}}
             </li>
         {{/each}}
     </ul>
 {{else}}
     <p>No ratings yet for this resource.</p>
+{{/if}}
+
+<h3>Bookmark Status</h3>
+{{#if isBookmarked}}
+    <form action="/bookmarks/remove/{{resource._id}}" method="POST">
+        <button type="submit">Remove Bookmark</button>
+    </form>
+{{else}}
+    <form action="/bookmarks/add/{{resource._id}}" method="POST">
+        <button type="submit">Add to Bookmarks</button>
+    </form>
 {{/if}}
 
 <h3>Add/Update Your Rating</h3>

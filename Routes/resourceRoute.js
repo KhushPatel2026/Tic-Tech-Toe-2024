@@ -13,4 +13,6 @@ router.get('/resource/:id/download', isAuthenticated,resourceController.download
 router.get('/add', isAuthenticated,resourceController.renderAddResource);
 router.post('/add/upload', isAuthenticated,upload.fields([{ name: 'pdfFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]), resourceController.uploadResource);
 
+//router.get('/getSuggestedBooks', isAuthenticated,resourceController.)
+
 module.exports = router;

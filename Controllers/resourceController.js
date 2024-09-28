@@ -1,4 +1,5 @@
 const Resource = require('../Models/Resource');
+const User = require('../Models/User');
 //const { cloudinary } = require('../Utils/cloudinaryConfig'); 
 const path = require('path');
 const fs = require('fs');
@@ -6,7 +7,12 @@ const fs = require('fs');
 exports.renderResources = async (req, res) => {
     try {
         const resources = await Resource.find({ accessLevel: 'public' }).populate('uploadedBy');
-        res.render('Dashboard', { title: 'Resources', user: req.user, resources });
+        const userLikes = req.user.likes.map(like => like.toString());
+        const resourcesWithLikes = resources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithLikes });
     } catch (error) {
         console.error(error);
         res.status(500).render('Dashboard', { title: 'Resources', user: req.user, error: 'Something went wrong. Please try again.' });
@@ -28,9 +34,12 @@ exports.renderResource = async (req, res) => {
         if (!resource) {
             return res.status(404).render('Resource', { title: 'Resource Not Found', user: req.user, error: 'Resource not found.' });
         }
+        isPublic = resource.accessLevel === 'public';
         resource.views += 1;
         await resource.save();
-        res.render('Resource', { title: resource.title, user: req.user, resource });
+        const user = await User.findById(req.user.id);
+        const isBookmarked = user.bookmarks.includes(resourceId);
+        res.render('Resource', { title: resource.title, user: req.user, resource, isBookmarked, isPublic });
     } catch (error) {
         console.error(error);
         res.status(500).render('Resource', { title: 'Resource Not Found', user: req.user, error: 'Something went wrong. Please try again.' });

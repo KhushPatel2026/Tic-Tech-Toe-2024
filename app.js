@@ -1,20 +1,23 @@
 const express = require("express");
 const dontenv = require("dotenv").config();
+const exphbs = require('express-handlebars');
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/User");
-const authRoutes = require("./routes/authRoute");
-const resourceRoutes = require("./routes/resourceRoute");
+const authRoutes = require("./Routes/authRoute");
+const resourceRoutes = require("./Routes/resourceRoute");
 const ratingRoutes = require("./routes/ratingRoute");
+const bookmarkRoutes = require("./routes/bookmarkRoute");
+const likeRoutes = require("./routes/likeRoute");
 const hbs = require("hbs");
 const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://127.0.0.1:27017/starterkit")
+mongoose.connect("mongodb://127.0.0.1:27017/abcd")
   .then(() => console.log("Connected to DB"))
   .catch(err => console.log(err));
 
@@ -39,10 +42,10 @@ app.set("views", path.join(__dirname, "views"));
 hbs.registerPartials(path.join(__dirname, "views", "partials"));
 
 passport.use(new LocalStrategy(
-  { usernameField: 'emailid' },
-  async (emailid, password, done) => {
+  { usernameField: 'email' },
+  async (email, password, done) => {
     try {
-      const user = await User.findOne({ emailid });
+      const user = await User.findOne({ email });
       if (!user) return done(null, false, { message: 'Incorrect email.' });
       const isMatch = await user.comparePassword(password);
       if (!isMatch) return done(null, false, { message: 'Incorrect password.' });
@@ -71,6 +74,8 @@ app.use((req, res, next) => {
 app.use("/", authRoutes);
 app.use("/resource", resourceRoutes);
 app.use('/ratings', ratingRoutes);
+app.use('/bookmarks', bookmarkRoutes);
+app.use('/likes', likeRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
