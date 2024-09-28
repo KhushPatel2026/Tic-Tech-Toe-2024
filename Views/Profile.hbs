@@ -1,5 +1,1087 @@
-<h1>Your Profile</h1>
+{{!-- <h1>Your Profile</h1>
 <form action="/profile/update" method="POST">
   <input type="text" name="name" value="{{user.name}}" required />
   <button type="submit">Update Profile</button>
-</form>
+</form> --}}
+
+
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Homepage Clone | CodingNepal</title>
+  <!-- Linking Unicons For Icons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <style>
+    /* Importing Google Font - Open Sans */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: "Open Sans", sans-serif;
+}
+
+/* Color variables for light theme */
+:root {
+--white-color: #fff;
+--black-color: #000;
+--light-white-color: #f0f0f0;
+--light-gray-color: #e5e5e5;
+--border-color: #ccc;
+--primary-color: #3b82f6;
+--secondary-color: #404040;
+--overlay-dark-color: rgba(0, 0, 0, 0.6);
+---theme-dark-1: #2E073F;
+---theme-dark-2: #7A1CAC;
+---theme-dark-3: #AD49E1;
+---theme-dark-4: #EBD3F8;
+
+}
+
+/* Color variables for dark theme */
+.dark-mode {
+--white-color: #171717;
+--black-color: #d4d4d4;
+--light-white-color: #333;
+--light-gray-color: #404040;
+--border-color: #808080;
+--secondary-color: #d4d4d4;
+}
+
+body {
+background: var(--white-color);
+}
+
+.container {
+display: flex;
+overflow: hidden;
+max-height: 100vh;
+flex-direction: column;
+}
+
+header, .sidebar .nav-left, .category-list {
+position: sticky;
+top: 0;
+z-index: 10;
+background: var(--white-color);
+}
+
+.navbar {
+display: flex;
+gap: 2rem;
+align-items: center;
+padding: 0.5rem 1rem;
+justify-content: space-between;
+}
+
+:where(.navbar, .sidebar) .nav-section {
+gap: 1rem;
+}
+
+:where(.navbar, .sidebar) :where(.nav-section, .nav-logo, .search-form) {
+display: flex;
+align-items: center;
+}
+
+:where(.navbar, .sidebar) :where(.logo-image, .user-image) {
+width: 32px;
+cursor: pointer;
+border-radius: 50%;
+}
+
+:where(.navbar, .sidebar) .nav-section .nav-button {
+border: none;
+height: 40px;
+width: 40px;
+cursor: pointer;
+background: none;
+border-radius: 50%;
+}
+
+:where(.navbar, .sidebar) .nav-section .nav-button:hover {
+background: var(--light-gray-color) !important;
+}
+
+:where(.navbar, .sidebar) .nav-button i {
+font-size: 1.5rem;
+display: flex;
+color: var(--black-color);
+align-items: center;
+justify-content: center;
+}
+
+:where(.navbar, .sidebar) .nav-logo {
+display: flex;
+gap: 0.5rem;
+text-decoration: none;
+}
+
+:where(.navbar, .sidebar) .nav-logo .logo-text {
+color: var(--black-color);
+font-size: 1.25rem;
+}
+
+.navbar .nav-center {
+gap: 0.5rem;
+width: 100%;
+display: flex;
+justify-content: center;
+}
+
+.navbar .search-form {
+flex: 1;
+height: 40px;
+max-width: 550px;
+}
+
+.navbar .search-form .search-input {
+width: 100%;
+height: 100%;
+font-size: 1rem;
+padding: 0 1rem;
+outline: none;
+color: var(--black-color);
+background: var(--white-color);
+border-radius: 3.1rem 0 0 3.1rem;
+border: 1px solid var(--border-color);
+}
+
+.navbar .search-form .search-input:focus {
+border-color: var(--primary-color);
+}
+
+.navbar .search-form .search-button {
+height: 40px;
+width: auto;
+padding: 0 1.25rem;
+border-radius: 0 3.1rem 3.1rem 0;
+border: 1px solid var(--border-color);
+border-left: 0;
+}
+
+.navbar .nav-center .mic-button {
+background: var(--light-white-color);
+}
+
+.navbar .nav-right .search-button {
+display: none;
+}
+
+.main-layout {
+display: flex;
+overflow-y: auto;
+scrollbar-color: #a6a6a6 transparent;
+}
+
+.main-layout .sidebar {
+width: 280px;
+overflow: hidden;
+padding: 0 0.7rem 0;
+background: var(--white-color);
+}
+
+.main-layout .sidebar .nav-left {
+display: none;
+padding: 0.5rem 0.3rem;
+}
+
+body.sidebar-hidden .main-layout .sidebar {
+width: 0;
+padding: 0;
+}
+
+.sidebar .links-container {
+padding: 1rem 0 2rem;
+overflow-y: auto;
+height: calc(100vh - 60px);
+scrollbar-width: thin;
+scrollbar-color: transparent transparent;
+}
+
+.sidebar .links-container:hover {
+scrollbar-color: #a6a6a6 transparent;
+}
+
+.sidebar .link-section .link-item {
+display: flex;
+color: var(--black-color);
+white-space: nowrap;
+align-items: center;
+font-size: 0.938rem;
+padding: 0.37rem 0.75rem;
+margin-bottom: 0.25rem;
+border-radius: 0.5rem;
+text-decoration: none;
+}
+
+.sidebar .link-section .red{
+color: var(---theme-dark-2);
+display: flex;
+white-space: nowrap;
+align-items: center;
+font-size: 0.938rem;
+padding: 0.37rem 0.75rem;
+margin-bottom: 0.25rem;
+border-radius: 0.5rem;
+text-decoration: none;
+}
+
+
+.sidebar .link-section .link-item:hover {
+background: var(--light-gray-color);
+}
+
+.sidebar .link-section .link-item i {
+font-size: 1.4rem;
+margin-right: 0.625rem;
+}
+
+.sidebar .link-section .section-title {
+color: var(--black-color);
+font-weight: 600;
+font-size: 0.938rem;
+margin: 1rem 0 0.5rem 0.5rem;
+}
+
+.sidebar .section-separator {
+height: 1px;
+margin: 0.64rem 0;
+background: var(--light-gray-color);
+}
+
+.main-layout .content-wrapper {
+padding: 0 1rem;
+overflow-x: hidden;
+width: 100%;
+display: grid;
+}
+
+.content-wrapper .category-list {
+display: flex;
+overflow-x: auto;
+gap: 0.75rem;
+padding: 0.75rem 0 0.7rem;
+scrollbar-width: none;
+}
+
+.category-list .category-button {
+border: none;
+cursor: pointer;
+font-weight: 500;
+font-size: 0.94rem;
+border-radius: 0.5rem;
+white-space: nowrap;
+color: var(--black-color);
+padding: 0.4rem 0.75rem;
+background: var(--light-gray-color);
+}
+
+.category-list .category-button.active {
+color: var(--white-color);
+background: var(--black-color);
+pointer-events: none;
+}
+
+.dark-mode .category-list .category-button.active {
+filter: brightness(120%);
+}
+
+.category-list .category-button:not(.active):hover {
+background: var(--border-color);
+}
+
+.content-wrapper .video-list {
+display: grid; 
+gap: 1rem;
+padding: 1.25rem 0 4rem;
+grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.video-list .video-card {
+text-decoration: none;
+}
+
+.video-list .video-card .thumbnail-container {
+position: relative;
+}
+
+.video-list .video-card .thumbnail {
+width: 100%;
+object-fit: contain;
+border-radius: 0.5rem;
+aspect-ratio: 3 / 4;
+background: var(--light-white-color);
+}
+
+.video-list .video-card .duration {
+position: absolute;
+right: 0.65rem;
+bottom: 0.8rem;
+color: #fff;
+font-size: 0.875rem;
+padding: 0 0.3rem;
+border-radius: 0.3rem;
+background: var(--overlay-dark-color);
+}
+
+.video-list .video-card .video-info {
+display: flex;
+gap: 0.7rem;
+padding: 0.7rem 0.5rem;
+}
+
+.video-list .video-card .icon {
+width: 36px;
+height: 36px;
+border-radius: 50%;
+}
+
+.video-list .video-card .title {
+font-size: 1rem;
+color: var(--black-color);
+font-weight: 600;
+line-height: 1.375;
+overflow: hidden;
+display: -webkit-box;
+-webkit-box-orient: vertical;
+-webkit-line-clamp: 2;
+}
+
+.video-list .video-card:hover .title {
+color: var(--primary-color);
+}
+
+.video-list .video-card p {
+font-size: 0.875rem;
+color: var(--secondary-color);
+}
+
+.video-list .video-card .channel-name {
+margin: 0.25rem 0 0.15rem;
+}
+
+/* Responsive media code for small devices */
+@media (max-width: 768px) {
+.navbar .nav-center {
+display: none;
+}
+
+.navbar .nav-right .search-button {
+display: block;
+}
+
+.main-layout .screen-overlay {
+position: absolute;
+left: 0;
+top: 0;
+z-index: 15;
+width: 100%;
+height: 100vh;
+background: var(--overlay-dark-color);
+transition: 0.2s ease;
+}
+
+body.sidebar-hidden .main-layout .screen-overlay {
+opacity: 0;
+pointer-events: none;
+}
+
+.main-layout .sidebar {
+position: absolute;
+left: 0;
+top: 0;
+z-index: 20;
+height: 100vh;
+transition: 0.2s ease;
+}
+
+body.sidebar-hidden .main-layout .sidebar {
+left: -280px;
+}
+
+.main-layout .sidebar .nav-left {
+display: flex;
+}
+}
+
+
+/* Profile Page Styles */
+.profile-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 100%;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+  }
+  
+  .profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--light-gray-color);
+    padding: 2rem;
+    border-radius: 0.75rem;
+    width: 400px; 
+  }
+  
+  .avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+  }
+  
+  .user-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--black-color);
+  }
+  
+  .user-email {
+    font-size: 1rem;
+    color: var(--secondary-color);
+  }
+  
+  .profile-body {
+    background: var(--white-color);
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 600px;
+    width: 100%; /* Takes up remaining space */
+    position: relative;
+    max-height: 400px; /* Limit height */
+    overflow-y: auto; /* Enable vertical scroll */
+  }
+  
+  /* Hide the scrollbar */
+  .profile-body::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .profile-body h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  
+  .book-preferences {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .book-preferences li {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    color: var(--black-color);
+    border-bottom: 1px solid var(--light-gray-color);
+    position: relative;
+  }
+  
+  .book-preferences li:last-child {
+    border-bottom: none;
+  }
+  
+  .delete-btn {
+    background: red;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    position: absolute;
+    right: 0; /* Align to the right */
+  }
+  
+  .delete-btn:hover {
+    background: darkred;
+  }
+  
+  /* Add Preference Section */
+  .add-preference {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .add-preference input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
+
+  .add-preference select {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+  }
+
+  .add-preference .add-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  
+  .add-preference .add-btn:hover {
+    background: #2b6cb0;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .profile-page {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .avatar {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .user-name {
+      font-size: 1.25rem;
+    }
+  
+    .profile-body h3 {
+      font-size: 1.1rem;
+    }
+  
+    .book-preferences li {
+      font-size: 0.938rem;
+    }
+  
+    .profile-header {
+      width: 100%;
+      max-width: 300px;
+    }
+  
+    .profile-body {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
+  
+
+  .content-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+
+  /* Dark Mode Styles */
+.dark-mode .profile-body {
+    background: #404040; /* Background of the profile body */
+}
+
+.dark-mode .profile-body h3 {
+    color: #ffffff; /* Color of the h3 element */
+}
+
+/* Additional styles for the profile page and cards in dark mode */
+.dark-mode .profile-header {
+    background: #404040; /* Background for the profile header */
+}
+
+.dark-mode .book-preferences li {
+    color: #ffffff; /* Text color for list items in dark mode */
+}
+
+.book-preferences li {
+    border-bottom: 1px solid #ffffff48;
+}
+
+/* Common styles for book list */
+.book-list {
+    overflow-y: auto; 
+    max-height: 400px; 
+    margin-top: 1.5rem; /* Space above the book list */
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 48%;
+    margin-bottom: 40px;
+}
+
+.book-list h3{
+    margin-bottom: 20px;
+}
+
+/* Dark mode styling */
+.book-list.dark-mode {
+    background-color: #404040; /* Dark background */
+}
+
+.book-list.dark-mode h3,
+.book-list.dark-mode .book-title {
+    color: #fff; /* White text for h3 and book titles */
+}
+
+.book-list.dark-mode .book-item {
+    background-color: #505050;
+     /* Slightly lighter dark for items */
+}
+
+.book-list.dark-mode .book-rating,
+.book-list.dark-mode .book-genre {
+    color: #ccc; /* Light color for dark mode */
+}
+
+/* Light mode styling */
+.book-list.light-mode {
+    background-color: #f5f5f5; /* Light background */
+}
+
+.book-list.light-mode .book-item {
+    background-color: #ffffff; /* White background for items */
+    border: 1px solid #ccc; /* Light border */
+}
+
+.book-list.light-mode h3,
+.book-list.light-mode .book-title {
+    color: #333; /* Dark text for light mode */
+}
+
+.book-list.light-mode .book-rating,
+.book-list.light-mode .book-genre {
+    color: #555; /* Darker text for light mode */
+}
+
+/* Book item styles */
+.book-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+
+.book-image {
+    width: 100%;
+    max-width: 120px; /* Adjust as necessary */
+    aspect-ratio: 4 / 3; /* Maintain 4:3 aspect ratio */
+    border-radius: 0.5rem;
+    object-fit: cover; /* Ensure image covers the box */
+}
+
+.book-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Bookmark button styles */
+.bookmark-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem; /* Adjust size as needed */
+    color: #777; /* Default color */
+    transition: color 0.3s ease;
+}
+
+.bookmark-btn:hover {
+    color: #ff9800; /* Change color on hover */
+}
+
+/* Dark mode bookmark button */
+.book-list.dark-mode .bookmark-btn {
+    color: #fff; /* White color for dark mode */
+}
+
+
+/* Dark Mode Styles */
+.dark-mode .book-list {
+    background-color: #404040; /* Background of the book-list */
+    padding: 1.5rem; /* Keep padding consistent */
+    border-radius: 0.75rem; /* Match the border radius with other containers */
+    margin-top: 1.5rem; /* Space above the book list */
+}
+
+/* Text color for book-list items in dark mode */
+.dark-mode .book-list h3,
+.dark-mode .book-list .book-title,
+.dark-mode .book-list .book-rating,
+.dark-mode .book-list .book-genre {
+    color: #ffffff; /* White text for all elements */
+}
+
+/* Additional styles for book items in dark mode */
+.dark-mode .book-list .book-item {
+    background-color: #505050; /* Slightly lighter dark for items */
+    padding: 1rem; /* Consistent padding for book items */
+    border-radius: 0.5rem; /* Match border radius with other items */
+}
+
+/* Adjust the bookmark button to be on the right */
+.book-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space items to justify content */
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.book-details {
+    display: flex;               /* Use flexbox for layout */
+    justify-content: space-between; /* Space between text details and icon */
+    align-items: flex-start;    /* Align items to the top */
+    width: 100%;                /* Ensure it takes full width */
+}
+
+/* Other existing styles remain the same... */
+
+
+.text-details {
+    display: flex;              /* Use flexbox to arrange text details */
+    flex-direction: column;     /* Arrange items in a column */
+    margin-right: 1rem;        /* Space between text and icon */
+}
+
+.bookmark-icon {
+    cursor: pointer;            /* Change cursor to pointer on hover */
+    color: #777;                /* Default color for the bookmark */
+    transition: color 0.3s ease;
+    font-size: 1.5rem; /* Smooth transition for color change */
+}
+
+/* Change color on hover */
+.bookmark-icon:hover {
+    color: #ff9800;            /* Change color on hover */
+}
+
+/* Dark mode styles for the bookmark icon */
+.dark-mode .bookmark-icon {
+    color: #fff;               /* White color for dark mode */
+}
+
+
+.all-content{
+    display: grid;
+}
+
+
+.book-lists-container{
+    justify-content: center;
+    margin-top: -20px;
+    display: flex;
+    gap: 37px;
+}
+
+.book-item {
+    margin-bottom: 1rem; /* Add spacing between book items */
+}
+
+.book-lists-container::-webkit-scrollbar{
+    display: none;
+}
+  </style>
+</head>
+<body class="sidebar-hidden">
+  <div class="container">
+    <!-- Header / Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="nav-section nav-left">
+          <button class="nav-button menu-button">
+            <i class="uil uil-bars"></i>
+          </button>
+          <a href="#" class="nav-logo">
+            <img src="images/logo.png" alt="Logo" class="logo-image">
+            <h2 class="logo-text" href="#">EPixel</h2>
+          </a>
+        </div>
+        <!-- Search box -->
+        <div class="nav-section nav-center">
+          <form action="#" class="search-form">
+            <input type="search" placeholder="Search" class="search-input" required> <!--Search box-->
+            <button class="nav-button search-button">
+              <i class="uil uil-search"></i>
+            </button>
+          </form>
+        </div>
+        
+        <div class="nav-section nav-right">
+          <button class="nav-button search-button">
+            <i class="uil uil-search"></i>
+          </button>
+          <button class="nav-button theme-button">
+            <i class="uil uil-moon"></i>
+          </button>
+          <img src="images/logo.png" alt="User Image" class="user-image">
+        </div>
+      </nav>
+    </header>
+    
+    <!-- Main Layout -->
+    <main class="main-layout">
+      <div class="screen-overlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="nav-section nav-left">
+          <button class="nav-button menu-button">
+            <i class="uil uil-bars"></i>
+          </button>
+          <a href="#" class="nav-logo">
+            <img src="image/logo.png" alt="Logo" class="logo-image">
+            <h2 class="logo-text">CnTube</h2>
+          </a>
+        </div>
+  
+        <div class="links-container">
+          <div class="link-section">
+            <a href="#" class="link-item">
+              <i class="uil uil-estate"></i> Home
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-bookmark"></i> Bookmarked
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-heart"></i> Liked
+            </a>
+          </div>
+          <div class="section-separator"></div>
+  
+
+
+          <div class="link-section">
+            <h4 class="section-title">For you</h4>
+            <a href="#" class="link-item">
+              <i class="uil uil-user-square"></i> Suggested for you
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-fire"></i> Popular 
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-tag"></i> New Arrival
+            </a>
+          </div>
+          <div class="section-separator"></div>
+          
+          <div class="link-section">
+            <a href="#" class="link-item">
+              <i class="uil uil-star"></i>  Ratings
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-comment" ></i> Feedback
+            </a>
+          </div>
+          <div class="section-separator"></div>
+
+          <div class=" link-section">
+            <a href="#" class="link-item red">
+              <i class="uil uil-signout"></i>  Logout
+            </a>
+          </div>
+        </div>
+      </aside>
+  
+      <div class="content-wrapper">
+        <div class="profile-page">
+            <div class="profile-header">
+                <img src="images//logo.png" alt="User Avatar" class="avatar">
+                <h2 class="user-name">John Doe</h2>
+                <p class="user-email">john.doe@example.com</p>
+            </div>
+            <div class="profile-body">
+                <h3>Your Book Preferences</h3>
+                <ul class="book-preferences">
+                    <li>Fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
+                    <li>Mystery <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
+                    <li>Science Fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
+                    <li>Non-fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
+                    <li>Historical Fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
+                </ul>
+                <div class="add-preference">
+                    <select id="preference-select">
+                        <option value="">Select a preference</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Thriller">Thriller</option>
+                        <option value="Self-help">Self-help</option>
+                        <option value="Biography">Biography</option>
+                    </select>
+                    <button class="add-btn">Add Preference</button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="book-lists-container"> 
+
+            <div class="book-list">
+                <h3><i class="uil uil-bookmark"></i> Bookmarked</h3>
+                <div class="book-item">
+                    <img src="images/book2.jpg" alt="Book Title" class="book-image">
+                    <div class="book-details">
+                        <div class="text-details">
+                            <h4 class="book-title">Book name</h4>
+                            <p class="book-rating">Author name here</p>
+                            <p class="book-rating">Rating: 4.0/5</p>
+                            <p class="book-genre">Genre: Mystery</p>
+                        </div>
+                        <i class="uil uil-bookmark bookmark-icon"></i>
+                    </div>
+                </div>
+
+                <div class="book-item">
+                    <img src="image/book2.jpg" alt="Book Title" class="book-image">
+                    <div class="book-details">
+                        <div class="text-details">
+                            <h4 class="book-title">Book name</h4>
+                            <p class="book-rating">Author name here</p>
+                            <p class="book-rating">Rating: 4.0/5</p>
+                            <p class="book-genre">Genre: Mystery</p>
+                        </div>
+                        <i class="uil uil-bookmark bookmark-icon"></i>
+                    </div>
+                </div>
+                <div class="book-item">
+                    <img src="image/book2.jpg" alt="Book Title" class="book-image">
+                    <div class="book-details">
+                        <div class="text-details">
+                            <h4 class="book-title">Book name</h4>
+                            <p class="book-rating">Author name here</p>
+                            <p class="book-rating">Rating: 4.0/5</p>
+                            <p class="book-genre">Genre: Mystery</p>
+                        </div>
+                        <i class="uil uil-bookmark bookmark-icon"></i>
+                    </div>
+                </div>
+
+                <div class="book-item">
+                    <img src="images/book2.jpg" alt="Book Title" class="book-image">
+                    <div class="book-details">
+                        <div class="text-details">
+                            <h4 class="book-title">Book name</h4>
+                            <p class="book-rating">Author name here</p>
+                            <p class="book-rating">Rating: 4.0/5</p>
+                            <p class="book-genre">Genre: Mystery</p>
+                        </div>
+                        <i class="uil uil-bookmark bookmark-icon"></i>
+                    </div>
+                </div>
+                <div class="book-item">
+                    <img src="images/book2.jpg" alt="Book Title" class="book-image">
+                    <div class="book-details">
+                        <div class="text-details">
+                            <h4 class="book-title">Book name</h4>
+                            <p class="book-rating">Author name here</p>
+                            <p class="book-rating">Rating: 4.0/5</p>
+                            <p class="book-genre">Genre: Mystery</p>
+                        </div>
+                        <i class="uil uil-bookmark bookmark-icon"></i>
+                    </div>
+                </div>
+                <!-- Add more book items as needed -->
+            </div>
+    
+            <div class="book-list">
+                <h3><i class="uil uil-heart"></i> Liked</h3>
+                <div class="book-item">
+                    <img src="images/book3.jpg" alt="Another Book Title" class="book-image">
+                    <div class="book-details">
+                        <div class="text-details">
+                            <h4 class="book-title">Book name</h4>
+                            <p class="book-rating">Author name here</p>
+                            <p class="book-rating">Rating: 5.0/5</p>
+                            <p class="book-genre">Genre: Fantasy</p>
+                        </div>
+                        <i class="uil uil-heart bookmark-icon"></i>
+                    </div>
+                </div>
+                <!-- Add more book items as needed -->
+            </div>
+
+        </div>
+    </div>
+    
+    
+    </main>
+  </div>
+
+  <!-- Linking custom script -->
+  <script>
+    const menuButtons = document.querySelectorAll(".menu-button");
+const screenOverlay = document.querySelector(".main-layout .screen-overlay");
+const themeButton = document.querySelector(".navbar .theme-button i");
+
+// Toggle sidebar visibility when menu buttons are clicked
+menuButtons.forEach(button => {
+button.addEventListener("click", () => {
+document.body.classList.toggle("sidebar-hidden");
+});
+});
+
+// Toggle sidebar visibility when screen overlay is clicked
+screenOverlay.addEventListener("click", () => {
+document.body.classList.toggle("sidebar-hidden");
+});
+
+// Initialize dark mode based on localStorage
+if (localStorage.getItem("darkMode") === "enabled") {
+document.body.classList.add("dark-mode");
+themeButton.classList.replace("uil-moon", "uil-sun");
+} else {
+themeButton.classList.replace("uil-sun", "uil-moon");
+}
+
+// Toggle dark mode when theme button is clicked
+themeButton.addEventListener("click", () => {
+const isDarkMode = document.body.classList.toggle("dark-mode");
+localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+themeButton.classList.toggle("uil-sun", isDarkMode);
+themeButton.classList.toggle("uil-moon", !isDarkMode);
+});
+
+// Show sidebar on large screens by default
+if (window.innerWidth >= 768) {
+document.body.classList.remove("sidebar-hidden");
+}
+
+
+
+
+document.querySelector('.add-btn').addEventListener('click', function() {
+    const preferenceSelect = document.getElementById('preference-select');
+    const selectedPreference = preferenceSelect.value;
+    
+    if (selectedPreference) {
+      const ul = document.querySelector('.book-preferences');
+      const li = document.createElement('li');
+      li.innerHTML = `${selectedPreference} <button class="delete-btn"><i class="uil uil-trash"></i></button>`;
+      ul.appendChild(li);
+      preferenceSelect.value = ''; // Reset the dropdown
+      addDeleteFunctionality(); // Add delete functionality for new buttons
+    } else {
+      alert('Please select a preference to add.'); // Alert if no preference is selected
+    }
+  });
+  
+  function addDeleteFunctionality() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        this.parentElement.remove();
+      });
+    });
+  }
+  
+  addDeleteFunctionality(); // Add initially
+  </script>
+</body>
+</html>
