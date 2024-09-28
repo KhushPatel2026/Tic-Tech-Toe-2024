@@ -115,7 +115,7 @@ exports.renderAddResource = (req, res) => {
 
 exports.uploadResource = async (req, res) => {
     try {
-        const { title, description, subject, tags, accessLevel } = req.body;
+        const { title, description, subject, tags, accessLevel, author } = req.body;
 
         if (!title || !subject || !req.files['pdfFile'] || !req.files['imageFile']) {
             return res.status(400).render('AddResource', {
@@ -141,6 +141,7 @@ exports.uploadResource = async (req, res) => {
 
         const newResource = new Resource({
             title,
+            author,
             description,
             subject,
             tags: tags ? tags.split(',').map(tag => tag.trim()) : [],
@@ -152,6 +153,11 @@ exports.uploadResource = async (req, res) => {
         });
 
         await newResource.save();
+
+        const user = await User.findById(req.user.id);
+        console.log(user);
+        console.log(newResource);
+        user.uploadedResources.push(newResource._id);
 
         res.render('ResourceSuccess', {
             title: 'Resource Uploaded Successfully',

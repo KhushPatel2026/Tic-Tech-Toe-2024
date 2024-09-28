@@ -18,4 +18,6 @@ router.get("/logout", authController.logout);
 router.get("/profile", authController.renderProfile);
 router.post("/profile/update", isAuthenticated, authController.updateProfile);
 
+router.get("/mybooks", isAuthenticated, authController.myBooks);
+
 module.exports = router;

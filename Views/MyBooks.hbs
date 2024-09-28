@@ -1,0 +1,33 @@
+    <header>
+        <h1>{{user.name}}'s Books</h1>
+        <nav>
+            <ul>
+                <li><a href="/resource">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/resource/add">Add Book</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Your Published Resources</h2>
+        {{#if resources.length}}
+            <div class="resource-list">
+                {{#each resources}}
+                    <div class="resource-item">
+                        <h3>{{this.title}}</h3>
+                        <p>{{this.description}}</p>
+                        <img src="/{{this.fileImage}}" alt="{{this.title}}" class="resource-image">
+                        <p>Subject: {{this.subject}}</p>
+                        <p>Access Level: {{this.accessLevel}}</p>
+                        <p>Views: {{this.views}} | Downloads: {{this.downloads}}</p>
+                        <a href="/resource/{{this._id}}" class="view-resource">View Resource</a>
+                        <a href="/resource/{{this._id}}/edit" class="edit-resource">Edit Resource</a>
+                        <a href="/resource/{{this._id}}/delete" class="delete-resource">Delete Resource</a>
+                    </div>
+                {{/each}}
+            </div>
+        {{else}}
+            <p>You have not published any resources yet.</p>
+        {{/if}}
+    </main>

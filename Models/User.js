@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   preferences: {type: String},
   bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
+  publishedResources: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {
