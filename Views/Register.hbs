@@ -1,35 +1,11 @@
-{{!-- <h1>Register</h1>
-<h1>Register</h1>
-<form action="/register" method="POST">
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required />
-
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required />
-
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password" required />
-
-  <label for="role">Role:</label>
-  <select id="role" name="role" required>
-    <option value="student">Student</option>
-    <option value="teacher">Teacher</option>
-    <option value="admin">Admin</option>
-  </select>
-
-  <button type="submit">Register</button>
-</form>
-
- --}}
-
 <div class="container">
-    <form class="form">
+    <form class="form" method="post" action="/register">
         <!-- Your form fields here -->
         <div class="flex-column">
             <label>Name</label>
         </div>
         <div class="inputForm">
-            <input type="text" class="input" placeholder="Enter your Name">
+            <input type="text" class="input" placeholder="Enter your Name" name="name">
         </div>
 
         <div class="flex-column">

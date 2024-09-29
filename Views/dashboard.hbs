@@ -473,14 +473,20 @@ body.sidebar-hidden .main-layout .sidebar {
 
           <div class="link-section">
             <h4 class="section-title">For you</h4>
-            <a href="#" class="link-item">
+            <a href="/resource/getSuggestedBooks" class="link-item">
               <i class="uil uil-user-square"></i> Suggested for you
             </a>
-            <a href="#" class="link-item">
+            <a href="/resource/getMostViewedBooks" class="link-item">
               <i class="uil uil-fire"></i> Popular 
             </a>
-            <a href="#" class="link-item">
+            <a href="/resource/getLatestBooks" class="link-item">
               <i class="uil uil-tag"></i> New Arrival
+            </a>
+            <a href="/resource/getMostDownloadedBooks" class="link-item">
+              <i class="uil uil-save"></i> Most Downloaded
+            </a>
+            <a href="/resource/getMostRatedBooks" class="link-item">
+              <i class="uil uil-star"></i> Most Rated
             </a>
           </div>
           <div class="section-separator"></div>
@@ -508,6 +514,7 @@ body.sidebar-hidden .main-layout .sidebar {
         <form id="tag-filter-form" action="/resource/search" method="GET">
             <div class="category-list" id="category-list">
                 <!-- Tags will be dynamically populated here -->
+                <input type="hidden" name="tags" id="selected-tag" value="all">
             </div>
         </form>
 
@@ -605,7 +612,6 @@ function toggleLike(resourceId) {
     })
     .catch(error => console.error('Error:', error));
 }
-// Function to create category buttons
 const createCategoryButton = (tag) => {
     const button = document.createElement('button');
     button.type = 'button';
@@ -637,8 +643,8 @@ fetch('/resource/tags')
     .then(data => {
         const categoryList = document.getElementById('category-list');
         
-        // Create the "All" button
-        const allButton = createCategoryButton('All');
+        // Create the "All" button and set it as active
+        const allButton = createCategoryButton('All');// Mark it as active
         categoryList.appendChild(allButton);
         
         // Create buttons for each tag
@@ -649,13 +655,13 @@ fetch('/resource/tags')
     })
     .catch(error => console.error('Error fetching tags:', error));
 
-// Add click event for the "All" button
-document.querySelector('.category-button.active').addEventListener('click', function() {
-    // Set the value of the hidden input and submit the form
-    document.getElementById('selected-tag').value = 'All';
-    document.getElementById('tag-filter-form').submit();
+// Ensure the "All" button is active on page load
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.category-button.active').addEventListener('click', function() {
+        // Set the value of the hidden input and submit the form
+        document.getElementById('tag-filter-form').submit();
+    });
 });
-
-  </script>
+</script>
 </body>
 </html>
