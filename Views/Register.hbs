@@ -45,13 +45,34 @@
 
 <style>
 /* Container for centering the form */
-body, html {
-    height: 100%;
-    margin: 0;
-    justify-content: center; /* Horizontally center */
-    align-items: center;     /* Vertically center */
-    background-color: #f0f0f0; /* Optional background color */
+
+
+
+* {
+  overflow: hidden;
 }
+body {
+	background: linear-gradient(-45deg, #2E073F, #7A1CAC, #AD49E1, #EBD3F8);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+*{
+    overflow: hidden;
+}
+
 
 .container {
     display: flex;

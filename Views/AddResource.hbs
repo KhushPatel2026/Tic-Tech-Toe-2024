@@ -705,9 +705,9 @@ button:hover {
         </div>
         <!-- Search box -->
         <div class="nav-section nav-center">
-          <form action="#" class="search-form">
-            <input type="search" placeholder="Search" class="search-input" required> <!--Search box-->
-            <button class="nav-button search-button">
+                    <form action="/resource/search" class="search-form" method="GET">
+            <input type="search" placeholder="Search" class="search-input" name="search" required> <!--Search box-->
+            <button class="nav-button search-button" type="submit">
               <i class="uil uil-search"></i>
             </button>
           </form>
@@ -774,9 +774,6 @@ button:hover {
           <div class="link-section">
             <a href="#" class="link-item">
               <i class="uil uil-star"></i>  Ratings
-            </a>
-            <a href="#" class="link-item">
-              <i class="uil uil-comment" ></i> Feedback
             </a>
           </div>
           <div class="section-separator"></div>

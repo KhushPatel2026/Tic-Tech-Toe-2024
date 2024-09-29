@@ -7,9 +7,9 @@
   <title>YouTube Homepage Clone | CodingNepal</title>
   <!-- Linking Unicons For Icons -->
   <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <link rel="stylesheet" href="style.css">
   <style>
-    /* Importing Google Font - Open Sans */
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
 
 * {
   margin: 0;
@@ -18,7 +18,6 @@
   font-family: "Open Sans", sans-serif;
 }
 
-/* Color variables for light theme */
 :root {
   --white-color: #fff;
   --black-color: #000;
@@ -33,6 +32,12 @@
   ---theme-dark-3: #AD49E1;
   ---theme-dark-4: #EBD3F8;
 
+  --text-color-light: #000;
+  --text-color-dark: #fff;
+
+  --background-color-light: #000000; /* Background color for light mode */
+  --background-color-dark: #171717;
+
 }
 
 /* Color variables for dark theme */
@@ -43,6 +48,12 @@
   --light-gray-color: #404040;
   --border-color: #808080;
   --secondary-color: #d4d4d4;
+
+  --text-color: var(--text-color-dark);
+  --background-color: var(--background-color-dark);
+
+  --text-color: var(--text-color-dark); /* Text color for dark mode */
+  --background-color: var(--background-color-dark); /* Background color for dark mode */
 }
 
 body {
@@ -93,6 +104,13 @@ header, .sidebar .nav-left, .category-list {
   cursor: pointer;
   background: none;
   border-radius: 50%;
+  
+}
+
+.nav-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 :where(.navbar, .sidebar) .nav-section .nav-button:hover {
@@ -212,7 +230,6 @@ body.sidebar-hidden .main-layout .sidebar {
 }
 
 .sidebar .link-section .red{
-  margin-top: 125PX;
   color: var(---theme-dark-2);
   display: flex;
   white-space: nowrap;
@@ -254,7 +271,6 @@ body.sidebar-hidden .main-layout .sidebar {
 }
 
 .content-wrapper .category-list {
-  display: flex;
   overflow-x: auto;
   gap: 0.75rem;
   padding: 0.75rem 0 0.7rem;
@@ -401,6 +417,75 @@ body.sidebar-hidden .main-layout .sidebar {
   }
 }
 
+
+/* Table Container */
+.table-container {
+  margin: 2rem 0;
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+/* Table Styles */
+.book-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--white-color);
+  color: var(--black-color);
+  border: 1px solid var(--border-color);
+}
+
+.book-table th, .book-table td {
+  padding: 1rem;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.book-table th {
+  background-color: var(---theme-dark-1);
+  color: var(--white-color);
+  font-weight: 600;
+}
+
+.book-table tbody tr:nth-child(even) {
+  background-color: var(--light-gray-color);
+}
+
+/* Dark Mode Table Styles */
+.dark-mode .book-table {
+  background-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+.dark-mode .book-table th {
+  background-color: var(---theme-dark-2);
+}
+
+.dark-mode .book-table tbody tr:nth-child(even) {
+  background-color: var(--light-white-color);
+}
+
+/* Add this inside your .dark-mode section */
+.dark-mode table {
+  background-color: var(--background-color-dark); /* Table background in dark mode */
+  color: var(--text-color-dark); /* Text color for table in dark mode */
+  border-color: var(--border-color); /* Border color for dark mode */
+}
+
+.dark-mode th, .dark-mode td {
+  background-color: var(--light-white-color); /* Header and data background in dark mode */
+  color: var(--text-color-dark); /* Text color for dark mode */
+  border: 1px solid var(--border-color); /* Adjust table border color */
+}
+
+.dark-mode th {
+  font-weight: bold;
+  background-color: var(---theme-dark-3); /* Darker color for header */
+}
+
+.dark-mode td {
+  background-color: var(--light-gray-color); /* Slightly different color for table rows */
+}
+
   </style>
 </head>
 <body class="sidebar-hidden">
@@ -413,8 +498,9 @@ body.sidebar-hidden .main-layout .sidebar {
             <i class="uil uil-bars"></i>
           </button>
           <a href="#" class="nav-logo">
-            <img src="/uploads/logo.png" alt="Logo" class="logo-image">
+            <img src="./image/logo.png" alt="Logo" class="logo-image">
             <h2 class="logo-text" href="#">EPixel</h2>
+            
           </a>
         </div>
         <!-- Search box -->
@@ -434,7 +520,7 @@ body.sidebar-hidden .main-layout .sidebar {
           <button class="nav-button theme-button">
             <i class="uil uil-moon"></i>
           </button>
-          <img src="/uploads/logo.png" alt="User Image" class="user-image">
+          <img src="./image/logo.png" alt="User Image" class="user-image">
         </div>
       </nav>
     </header>
@@ -450,7 +536,7 @@ body.sidebar-hidden .main-layout .sidebar {
             <i class="uil uil-bars"></i>
           </button>
           <a href="#" class="nav-logo">
-            <img src="/uploads/logo.png" alt="Logo" class="logo-image">
+            <img src="image/logo.png" alt="Logo" class="logo-image">
             <h2 class="logo-text">CnTube</h2>
           </a>
         </div>
@@ -473,20 +559,14 @@ body.sidebar-hidden .main-layout .sidebar {
 
           <div class="link-section">
             <h4 class="section-title">For you</h4>
-            <a href="/resource/getSuggestedBooks" class="link-item">
+            <a href="#" class="link-item">
               <i class="uil uil-user-square"></i> Suggested for you
             </a>
-            <a href="/resource/getMostViewedBooks" class="link-item">
+            <a href="#" class="link-item">
               <i class="uil uil-fire"></i> Popular 
             </a>
-            <a href="/resource/getLatestBooks" class="link-item">
+            <a href="#" class="link-item">
               <i class="uil uil-tag"></i> New Arrival
-            </a>
-            <a href="/resource/getMostDownloadedBooks" class="link-item">
-              <i class="uil uil-save"></i> Most Downloaded
-            </a>
-            <a href="/resource/getMostRatedBooks" class="link-item">
-              <i class="uil uil-star"></i> Most Rated
             </a>
           </div>
           <div class="section-separator"></div>
@@ -495,11 +575,12 @@ body.sidebar-hidden .main-layout .sidebar {
             <a href="#" class="link-item">
               <i class="uil uil-star"></i>  Ratings
             </a>
+
           </div>
           <div class="section-separator"></div>
 
           <div class=" link-section">
-            <a href="/logout" class="link-item red">
+            <a href="#" class="link-item red">
               <i class="uil uil-signout"></i>  Logout
             </a>
           </div>
@@ -507,158 +588,124 @@ body.sidebar-hidden .main-layout .sidebar {
       </aside>
   
       <div class="content-wrapper">
-        <!-- Category List Here-->
-        <form id="tag-filter-form" action="/resource/search" method="GET">
-            <div class="category-list" id="category-list">
-                <!-- Tags will be dynamically populated here -->
-                <input type="hidden" name="tags" id="selected-tag" value="all">
-            </div>
-        </form>
-
-        
-        <!-- Video List -->
-        <div class="video-list">
-
-
-{{#each resources}}
-<a href="/resource/resource/{{this._id}}" class="video-card">
-   <div class="thumbnail-container">
-      <img src="{{this.fileImage}}" alt="Video Thumbnail" class="thumbnail">
-      <p class="duration"><i class="uil uil-star"></i> {{this.averageRating}}</p> <!-- Rating -->
-   </div>
-   <div class="video-info">
-      <img src="{{this.uploadedBy.profileImage}}" alt="Uploader's Image" class="icon">
-      <div class="video-details">
-         <h2 class="title">{{this.title}}</h2> 
-         <p class="channel-name">{{this.uploadedBy.name}}</p>
-         <p class="views">{{this.subject}} • {{this.createdAt}}</p>
-      </div>
-   </div>
-   <!-- Like Button -->
-   <button class="like-button" data-id="{{this._id}}" onclick="toggleLike('{{this._id}}')">
-      {{#if this.isLiked}}
-         <i class="uil uil-heart" style="color: red;"></i> Liked
-      {{else}}
-         <i class="uil uil-heart"></i> Like
-      {{/if}}
-   </button>
-</a>
-{{/each}}
-
-
-
+        <div class="table-container">
+          <table class="book-table">
+            <thead>
+              <tr>
+                <th>Serial No.</th>
+                <th>Book Title</th>
+                <th>Book Author</th>
+                <th>Uploader's Name</th>
+                <th>Your Rating</th>
+                <th>Average Rating</th>
+                <th>Timestamp</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>The Great Gatsby</td>
+                <td>F. Scott Fitzgerald</td>
+                <td>John Doe</td>
+                <td>4/5</td>
+                <td>4.2</td>
+                <td>2023-09-29 10:30 AM</td>
+              </tr>
+              <!-- More rows can be added here -->
+            </tbody>
+          </table>
         </div>
+        
       </div>
     </main>
   </div>
 
   <!-- Linking custom script -->
   <script>
-
     const menuButtons = document.querySelectorAll(".menu-button");
 const screenOverlay = document.querySelector(".main-layout .screen-overlay");
 const themeButton = document.querySelector(".navbar .theme-button i");
 
 // Toggle sidebar visibility when menu buttons are clicked
 menuButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    document.body.classList.toggle("sidebar-hidden");
-  });
+button.addEventListener("click", () => {
+document.body.classList.toggle("sidebar-hidden");
+});
 });
 
 // Toggle sidebar visibility when screen overlay is clicked
 screenOverlay.addEventListener("click", () => {
-  document.body.classList.toggle("sidebar-hidden");
+document.body.classList.toggle("sidebar-hidden");
 });
 
 // Initialize dark mode based on localStorage
 if (localStorage.getItem("darkMode") === "enabled") {
-  document.body.classList.add("dark-mode");
-  themeButton.classList.replace("uil-moon", "uil-sun");
+document.body.classList.add("dark-mode");
+themeButton.classList.replace("uil-moon", "uil-sun");
 } else {
-  themeButton.classList.replace("uil-sun", "uil-moon");
+themeButton.classList.replace("uil-sun", "uil-moon");
 }
 
 // Toggle dark mode when theme button is clicked
 themeButton.addEventListener("click", () => {
-  const isDarkMode = document.body.classList.toggle("dark-mode");
-  localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
-  themeButton.classList.toggle("uil-sun", isDarkMode);
-  themeButton.classList.toggle("uil-moon", !isDarkMode);
+const isDarkMode = document.body.classList.toggle("dark-mode");
+localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+themeButton.classList.toggle("uil-sun", isDarkMode);
+themeButton.classList.toggle("uil-moon", !isDarkMode);
 });
 
 // Show sidebar on large screens by default
 if (window.innerWidth >= 768) {
-  document.body.classList.remove("sidebar-hidden");
+document.body.classList.remove("sidebar-hidden");
 }
-function toggleLike(resourceId) {
-    fetch(`/likes/toggle/${resourceId}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': '{{csrfToken}}' // Include CSRF token if using CSRF protection
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            // Reload the page or update the UI as needed
-            location.reload();
-        } else {
-            alert('Failed to toggle like.');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-const createCategoryButton = (tag) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'category-button';
-    button.setAttribute('data-tag', tag);
-    button.value = tag;
-    button.textContent = tag;
-
-    // Add click event listener to the button
-    button.addEventListener('click', function() {
-        // Remove 'active' class from all buttons and add to the clicked one
-        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
-        this.classList.add('active');
-
-        // Update the hidden input value
-        const selectedTag = this.getAttribute('data-tag');
-        document.getElementById('selected-tag').value = selectedTag;
-
-        // Submit the form
-        document.getElementById('tag-filter-form').submit();
+document.querySelector('.add-btn').addEventListener('click', function() {
+    const preferenceSelect = document.getElementById('preference-select');
+    const selectedPreference = preferenceSelect.value;
+    
+    if (selectedPreference) {
+      const ul = document.querySelector('.book-preferences');
+      const li = document.createElement('li');
+      li.innerHTML = `${selectedPreference} <button class="delete-btn"><i class="uil uil-trash"></i></button>`;
+      ul.appendChild(li);
+      preferenceSelect.value = ''; // Reset the dropdown
+      addDeleteFunctionality(); // Add delete functionality for new buttons
+    } else {
+      alert('Please select a preference to add.'); // Alert if no preference is selected
+    }
+  });
+  
+  function addDeleteFunctionality() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        this.parentElement.remove();
+      });
     });
+  }
+  
+  addDeleteFunctionality(); // Add initially
 
-    return button;
-};
+  const toggleSwitch = document.querySelector('.toggle-switch'); // Your toggle switch element
 
-// Fetch tags from the server
-fetch('/resource/tags')
-    .then(response => response.json())
-    .then(data => {
-        const categoryList = document.getElementById('category-list');
-        
-        // Create the "All" button and set it as active
-        const allButton = createCategoryButton('All');// Mark it as active
-        categoryList.appendChild(allButton);
-        
-        // Create buttons for each tag
-        data.forEach(tag => {
-            const tagButton = createCategoryButton(tag);
-            categoryList.appendChild(tagButton);
-        });
-    })
-    .catch(error => console.error('Error fetching tags:', error));
+toggleSwitch.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
 
-// Ensure the "All" button is active on page load
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.category-button.active').addEventListener('click', function() {
-        // Set the value of the hidden input and submit the form
-        document.getElementById('tag-filter-form').submit();
-    });
+  // Store the mode preference in local storage
+  if (document.body.classList.contains('dark-mode')) {
+    localStorage.setItem('theme', 'dark');
+  } else {
+    localStorage.setItem('theme', 'light');
+  }
 });
-</script>
+
+// Load the theme from local storage if it exists
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+  document.body.classList.add(currentTheme);
+}
+
+  
+  </script>
 </body>
 </html>

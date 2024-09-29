@@ -432,12 +432,18 @@ display: flex;
   }
   
   .user-name {
+    text-align: center;
+    padding: 10px;
+    justify-content: center;
     font-size: 1.5rem;
     font-weight: 600;
     color: var(--black-color);
+    border: hidden;
+    background-color: transparent;
   }
   
   .user-email {
+    padding-bottom: 10px;
     font-size: 1rem;
     color: var(--secondary-color);
   }
@@ -761,13 +767,9 @@ display: flex;
 .dark-mode .bookmark-icon {
     color: #fff;               /* White color for dark mode */
 }
-
-
 .all-content{
     display: grid;
 }
-
-
 .book-lists-container{
     justify-content: center;
     margin-top: -20px;
@@ -782,6 +784,38 @@ display: flex;
 .book-lists-container::-webkit-scrollbar{
     display: none;
 }
+
+.button-10 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+  border-radius: 6px;
+  border: none;
+
+  color: #fff;
+  background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+   background-origin: border-box;
+  box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-10:focus {
+  box-shadow: inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2), 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), 0px 0px 0px 3.5px rgba(58, 108, 217, 0.5);
+  outline: 0;
+}
+
+.input-fields{
+  display: grid;
+  gap: .9rem;
+}
+
+.fields-value{
+  width: 300px;
+}
   </style>
 </head>
 <body class="sidebar-hidden">
@@ -794,15 +828,15 @@ display: flex;
             <i class="uil uil-bars"></i>
           </button>
           <a href="#" class="nav-logo">
-            <img src="images/logo.png" alt="Logo" class="logo-image">
+            <img src="/uploads/logo.png" alt="Logo" class="logo-image">
             <h2 class="logo-text" href="#">EPixel</h2>
           </a>
         </div>
         <!-- Search box -->
         <div class="nav-section nav-center">
-          <form action="#" class="search-form">
-            <input type="search" placeholder="Search" class="search-input" required> <!--Search box-->
-            <button class="nav-button search-button">
+          <form action="/resource/search" class="search-form" method="GET">
+            <input type="search" placeholder="Search" class="search-input" name="search" required> <!--Search box-->
+            <button class="nav-button search-button" type="submit">
               <i class="uil uil-search"></i>
             </button>
           </form>
@@ -815,7 +849,7 @@ display: flex;
           <button class="nav-button theme-button">
             <i class="uil uil-moon"></i>
           </button>
-          <img src="images/logo.png" alt="User Image" class="user-image">
+          <img src="/uploads/logo.png" alt="User Image" class="user-image">
         </div>
       </nav>
     </header>
@@ -838,7 +872,7 @@ display: flex;
   
         <div class="links-container">
           <div class="link-section">
-            <a href="#" class="link-item">
+            <a href="/resource" class="link-item">
               <i class="uil uil-estate"></i> Home
             </a>
             <a href="#" class="link-item">
@@ -870,9 +904,7 @@ display: flex;
             <a href="#" class="link-item">
               <i class="uil uil-star"></i>  Ratings
             </a>
-            <a href="#" class="link-item">
-              <i class="uil uil-comment" ></i> Feedback
-            </a>
+
           </div>
           <div class="section-separator"></div>
 
@@ -886,29 +918,26 @@ display: flex;
   
       <div class="content-wrapper">
         <div class="profile-page">
+            <form action="/profile/update" method="POST">
             <div class="profile-header">
-                <img src="images//logo.png" alt="User Avatar" class="avatar">
-                <h2 class="user-name">John Doe</h2>
-                <p class="user-email">john.doe@example.com</p>
+                <img src="/uploads/logo.png" alt="User Avatar" class="avatar">
+
+                <input class="user-name" value="{{user.name}}" name="name" required>
+                <p class="user-email">{{user.email}}</p>
+
+                <button class="button-10" role="button" type="submit">update</button>
             </div>
+          </form>
             <div class="profile-body">
                 <h3>Your Book Preferences</h3>
-                <ul class="book-preferences">
-                    <li>Fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
-                    <li>Mystery <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
-                    <li>Science Fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
-                    <li>Non-fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
-                    <li>Historical Fiction <button class="delete-btn"><i class="uil uil-trash"></i></button></li>
-                </ul>
                 <div class="add-preference">
-                    <select id="preference-select">
-                        <option value="">Select a preference</option>
-                        <option value="Romance">Romance</option>
-                        <option value="Fantasy">Fantasy</option>
-                        <option value="Thriller">Thriller</option>
-                        <option value="Self-help">Self-help</option>
-                        <option value="Biography">Biography</option>
-                    </select>
+                  <div class="input-fields">
+                    <input type="text" class="fields-value" placeholder="Fantasy">
+                    <input type="text" class="fields-value" placeholder="Science">
+                    <input type="text" class="fields-value" placeholder="Math">
+                    <input type="text" class="fields-value" placeholder="Thriller">
+                    <input type="text" class="fields-value" placeholder="Romance">
+                    </div>
                     <button class="add-btn">Add Preference</button>
                 </div>
             </div>
@@ -1045,10 +1074,6 @@ themeButton.classList.toggle("uil-moon", !isDarkMode);
 if (window.innerWidth >= 768) {
 document.body.classList.remove("sidebar-hidden");
 }
-
-
-
-
 document.querySelector('.add-btn').addEventListener('click', function() {
     const preferenceSelect = document.getElementById('preference-select');
     const selectedPreference = preferenceSelect.value;
