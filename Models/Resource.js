@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-const ResourceSchema = new mongoose.Schema({
+const resourceSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  author: { type: String, required: true },
   description: { type: String },
   subject: { type: String, required: true },
   tags: [{ type: String }],
@@ -20,4 +21,5 @@ const ResourceSchema = new mongoose.Schema({
   ratings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rating' }]
 }, { timestamps: true });
 
-module.exports = mongoose.model('Resource', ResourceSchema);
+const Resource = mongoose.models.Resource || mongoose.model('Resource', resourceSchema);
+module.exports = Resource;

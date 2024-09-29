@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Resource = require('../models/Resource');
 
 exports.renderLoginForm = (req, res) => {
   res.render('Login', { title: 'Login', user: req.user });
@@ -11,7 +12,7 @@ exports.renderRegisterForm = (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
-    const adminApproved = false;  
+    let adminApproved = false;  
     if(role == "student"){
       adminApproved = true;
     }
@@ -63,3 +64,12 @@ exports.updateProfile = async (req, res) => {
     res.status(400).send(err.message);
   }
 };
+
+exports.myBooks = async (req, res) => {
+  if (!req.user) {
+    return res.redirect('/login');
+  }
+  const user = await User.findById(req.user.id).populate('publishedResources');
+  res.render('MyBooks', { title: 'Your Books', user: req.user, resources: user.publishedResources });
+}
+

@@ -13,4 +13,12 @@ router.get('/resource/:id/download', isAuthenticated,resourceController.download
 router.get('/add', isAuthenticated,resourceController.renderAddResource);
 router.post('/add/upload', isAuthenticated,upload.fields([{ name: 'pdfFile', maxCount: 1 }, { name: 'imageFile', maxCount: 1 }]), resourceController.uploadResource);
 
+router.get('/getSuggestedBooks', isAuthenticated,resourceController.getSuggestedBooks);
+router.get('/getLatestBooks', isAuthenticated,resourceController.getLatestBooks);
+router.get('/getMostViewedBooks', isAuthenticated,resourceController.getMostViewedBooks);
+router.get('/getMostDownloadedBooks', isAuthenticated,resourceController.getMostDownloadedBooks);
+router.get('/getMostRatedBooks', isAuthenticated,resourceController.getMostRatedBooks);
+router.get('/search', isAuthenticated,resourceController.getSearchAndFilterResources);
+router.get('/tags', isAuthenticated,resourceController.getTags);
+
 module.exports = router;

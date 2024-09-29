@@ -14,7 +14,8 @@ const userSchema = new mongoose.Schema({
   },
   preferences: {type: String},
   bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
+  publishedResources: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
 }, { timestamps: true });
 
 userSchema.pre('save', async function(next) {
@@ -33,5 +34,5 @@ userSchema.methods.comparePassword = function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.models.User || mongoose.model('User', userSchema);
 module.exports = User;
