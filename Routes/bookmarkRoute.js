@@ -7,5 +7,6 @@ router.get('/', isAuthenticated, bookmarkController.getBookmarks);
 router.get('/specific/:id', isAuthenticated, bookmarkController.getSpecificBookmarks);
 router.post('/add/:id', isAuthenticated, bookmarkController.addBookmarks);
 router.post('/remove/:id', isAuthenticated, bookmarkController.deleteBookmarks);
+router.get('/all',isAuthenticated, bookmarkController.getAllBookmarks)
 
 module.exports = router;

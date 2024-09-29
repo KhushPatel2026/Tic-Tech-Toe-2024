@@ -17,7 +17,7 @@ const path = require("path");
 const app = express();
 const port = process.env.PORT || 3000;
 
-mongoose.connect("mongodb://127.0.0.1:27017/abcd")
+mongoose.connect("mongodb+srv://pixelbazaar26:bPpn1J2zPux1pgnJ@cluster0.zlc1u.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => console.log("Connected to DB"))
   .catch(err => console.log(err));
 
@@ -71,6 +71,11 @@ app.use((req, res, next) => {
   res.locals.user = req.user;
   next();
 });
+
+app.get("/", (req, res) => {
+  res.render("Index", { title: "Home", user: req.user });
+});
+
 
 app.use("/", authRoutes);
 app.use("/resource", resourceRoutes);

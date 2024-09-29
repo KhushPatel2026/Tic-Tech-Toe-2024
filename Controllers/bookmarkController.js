@@ -58,8 +58,27 @@ exports.deleteBookmarks = async(req,res) => {
 
         user.bookmarks = user.bookmarks.filter(bookmark => bookmark != resourceId);
         await user.save();
-        res.redirect('/bookmarks');
+        res.redirect('/resource/resource/' + resourceId);
     }catch(err){
         res.status(400).send(err.message);
     }
 }
+
+exports.getAllBookmarks = async (req, res) => {
+    try {
+        const userBookmarks = req.user.bookmarks.map(bookmark => bookmark.toString());
+
+        const resources = await Resource.find({ accessLevel: 'public', _id: { $in: userBookmarks } }).populate('uploadedBy');
+
+        const resourcesWithBookmarks = resources.map(resource => ({
+            ...resource.toObject(),
+            isBookmarked: true
+        }));
+
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithBookmarks });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('Dashboard', { title: 'Resources', user: req.user, error: 'Something went wrong. Please try again.' });
+    }
+};
+

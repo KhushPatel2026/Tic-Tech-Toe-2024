@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     default: 'student',
     required: true
   },
-  preferences: {type: String},
+  preferences: [{type: String}],
   bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],
   publishedResources: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Resource' }],

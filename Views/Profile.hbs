@@ -932,104 +932,20 @@ display: flex;
                 <h3>Your Book Preferences</h3>
                 <div class="add-preference">
                   <div class="input-fields">
-                    <input type="text" class="fields-value" placeholder="Fantasy">
-                    <input type="text" class="fields-value" placeholder="Science">
-                    <input type="text" class="fields-value" placeholder="Math">
-                    <input type="text" class="fields-value" placeholder="Thriller">
-                    <input type="text" class="fields-value" placeholder="Romance">
-                    </div>
-                    <button class="add-btn">Add Preference</button>
+                    <form action="/profile/update" method="POST">
+  <input type="text" class="fields-value" name="preference1" value="{{user.preferences.[0]}}">
+  <input type="text" class="fields-value" name="preference2" value="{{user.preferences.[1]}}">
+  <input type="text" class="fields-value" name="preference3" value="{{user.preferences.[2]}}">
+  <input type="text" class="fields-value" name="preference4" value="{{user.preferences.[3]}}">
+  <input type="text" class="fields-value" name="preference5" value="{{user.preferences.[4]}}">
+  
+  <button type="submit" class="add-btn">Save Preferences</button>
+</form>
+
                 </div>
             </div>
         </div>
-    
-        <div class="book-lists-container"> 
-
-            <div class="book-list">
-                <h3><i class="uil uil-bookmark"></i> Bookmarked</h3>
-                <div class="book-item">
-                    <img src="images/book2.jpg" alt="Book Title" class="book-image">
-                    <div class="book-details">
-                        <div class="text-details">
-                            <h4 class="book-title">Book name</h4>
-                            <p class="book-rating">Author name here</p>
-                            <p class="book-rating">Rating: 4.0/5</p>
-                            <p class="book-genre">Genre: Mystery</p>
-                        </div>
-                        <i class="uil uil-bookmark bookmark-icon"></i>
-                    </div>
-                </div>
-
-                <div class="book-item">
-                    <img src="image/book2.jpg" alt="Book Title" class="book-image">
-                    <div class="book-details">
-                        <div class="text-details">
-                            <h4 class="book-title">Book name</h4>
-                            <p class="book-rating">Author name here</p>
-                            <p class="book-rating">Rating: 4.0/5</p>
-                            <p class="book-genre">Genre: Mystery</p>
-                        </div>
-                        <i class="uil uil-bookmark bookmark-icon"></i>
-                    </div>
-                </div>
-                <div class="book-item">
-                    <img src="image/book2.jpg" alt="Book Title" class="book-image">
-                    <div class="book-details">
-                        <div class="text-details">
-                            <h4 class="book-title">Book name</h4>
-                            <p class="book-rating">Author name here</p>
-                            <p class="book-rating">Rating: 4.0/5</p>
-                            <p class="book-genre">Genre: Mystery</p>
-                        </div>
-                        <i class="uil uil-bookmark bookmark-icon"></i>
-                    </div>
-                </div>
-
-                <div class="book-item">
-                    <img src="images/book2.jpg" alt="Book Title" class="book-image">
-                    <div class="book-details">
-                        <div class="text-details">
-                            <h4 class="book-title">Book name</h4>
-                            <p class="book-rating">Author name here</p>
-                            <p class="book-rating">Rating: 4.0/5</p>
-                            <p class="book-genre">Genre: Mystery</p>
-                        </div>
-                        <i class="uil uil-bookmark bookmark-icon"></i>
-                    </div>
-                </div>
-                <div class="book-item">
-                    <img src="images/book2.jpg" alt="Book Title" class="book-image">
-                    <div class="book-details">
-                        <div class="text-details">
-                            <h4 class="book-title">Book name</h4>
-                            <p class="book-rating">Author name here</p>
-                            <p class="book-rating">Rating: 4.0/5</p>
-                            <p class="book-genre">Genre: Mystery</p>
-                        </div>
-                        <i class="uil uil-bookmark bookmark-icon"></i>
-                    </div>
-                </div>
-                <!-- Add more book items as needed -->
-            </div>
-    
-            <div class="book-list">
-                <h3><i class="uil uil-heart"></i> Liked</h3>
-                <div class="book-item">
-                    <img src="images/book3.jpg" alt="Another Book Title" class="book-image">
-                    <div class="book-details">
-                        <div class="text-details">
-                            <h4 class="book-title">Book name</h4>
-                            <p class="book-rating">Author name here</p>
-                            <p class="book-rating">Rating: 5.0/5</p>
-                            <p class="book-genre">Genre: Fantasy</p>
-                        </div>
-                        <i class="uil uil-heart bookmark-icon"></i>
-                    </div>
-                </div>
-                <!-- Add more book items as needed -->
-            </div>
-
-        </div>
+  
     </div>
     
     

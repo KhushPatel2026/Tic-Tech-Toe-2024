@@ -75,3 +75,14 @@ exports.addOrUpdateRating = async (req, res) => {
         res.status(500).render('Error', { message: 'Something went wrong while submitting your rating.' });
     }
 };
+
+exports.getAllRatings = async (req, res) => {
+    try {
+        const user = req.user.id;
+        const ratings = await Rating.find({ user }).populate('resource'); 
+        res.render('Ratings', { ratings, title: 'Ratings', user: req.user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).render('Error', { message: 'Something went wrong while retrieving your ratings.' });
+    }
+};

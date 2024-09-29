@@ -412,7 +412,7 @@ body.sidebar-hidden .main-layout .sidebar {
           <button class="nav-button menu-button">
             <i class="uil uil-bars"></i>
           </button>
-          <a href="#" class="nav-logo">
+          <a href="/profile" class="nav-logo">
             <img src="/uploads/logo.png" alt="Logo" class="logo-image">
             <h2 class="logo-text" href="#">EPixel</h2>
           </a>
@@ -457,13 +457,13 @@ body.sidebar-hidden .main-layout .sidebar {
   
         <div class="links-container">
           <div class="link-section">
-            <a href="#" class="link-item">
+            <a href="/resource" class="link-item">
               <i class="uil uil-estate"></i> Home
             </a>
-            <a href="#" class="link-item">
+            <a href="/bookmarks/all" class="link-item">
               <i class="uil uil-bookmark"></i> Bookmarked
             </a>
-            <a href="#" class="link-item">
+            <a href="/likes/all" class="link-item">
               <i class="uil uil-heart"></i> Liked
             </a>
           </div>
@@ -492,7 +492,7 @@ body.sidebar-hidden .main-layout .sidebar {
           <div class="section-separator"></div>
           
           <div class="link-section">
-            <a href="#" class="link-item">
+            <a href="/ratings/all/u" class="link-item">
               <i class="uil uil-star"></i>  Ratings
             </a>
           </div>
@@ -523,11 +523,11 @@ body.sidebar-hidden .main-layout .sidebar {
 {{#each resources}}
 <a href="/resource/resource/{{this._id}}" class="video-card">
    <div class="thumbnail-container">
-      <img src="{{this.fileImage}}" alt="Video Thumbnail" class="thumbnail">
+      <img src="/{{this.fileImage}}" alt="Video Thumbnail" class="thumbnail">
       <p class="duration"><i class="uil uil-star"></i> {{this.averageRating}}</p> <!-- Rating -->
    </div>
    <div class="video-info">
-      <img src="{{this.uploadedBy.profileImage}}" alt="Uploader's Image" class="icon">
+      <img src="/uploads/logo.png" alt="Uploader's Image" class="icon">
       <div class="video-details">
          <h2 class="title">{{this.title}}</h2> 
          <p class="channel-name">{{this.uploadedBy.name}}</p>

@@ -175,8 +175,8 @@ exports.uploadResource = async (req, res) => {
 };
 
 const generateRecommendations = (user, allResources) => {
-    const userPreferences = user.preferences ? user.preferences.split(',') : [];
-    
+    const userPreferences = Array.isArray(user.preferences) ? user.preferences : [];
+
     const preferenceMatches = allResources.map(resource => ({
         resource,
         score: matchUserPreferences(userPreferences, resource.tags) +

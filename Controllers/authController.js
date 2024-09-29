@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
       adminApproved
     });
     await newUser.save();
-    res.redirect('/login');
+    res.redirect('/profile');
   } catch (err) {
     res.status(400).send(err.message);
   }
@@ -47,17 +47,32 @@ exports.renderProfile = (req, res) => {
 
 exports.updateProfile = async (req, res) => {
   try {
-    const { name, password, preferences } = req.body;
+    const { name, password, preference1, preference2, preference3, preference4, preference5 } = req.body;
+    
     const user = await User.findById(req.user.id);
     if (!user) {
       return res.status(404).send('User not found');
     }
-    user.name = name;
-    if (password && password.length > 0) {
+
+    if (name && name.trim() !== '') {
+      user.name = name;
+    }
+
+    if (password && password.trim().length > 0) {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
     }
-    user.preferences = preferences;
+
+    const preferencesArray = [
+      preference1 || user.preferences[0],
+      preference2 || user.preferences[1],
+      preference3 || user.preferences[2],
+      preference4 || user.preferences[3],
+      preference5 || user.preferences[4]
+    ];
+
+    user.preferences = preferencesArray;
+
     await user.save();
     res.redirect('/profile');
   } catch (err) {
