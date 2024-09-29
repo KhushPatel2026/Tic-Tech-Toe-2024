@@ -17,5 +17,8 @@ router.get('/getSuggestedBooks', isAuthenticated,resourceController.getSuggested
 router.get('/getLatestBooks', isAuthenticated,resourceController.getLatestBooks);
 router.get('/getMostViewedBooks', isAuthenticated,resourceController.getMostViewedBooks);
 router.get('/getMostDownloadedBooks', isAuthenticated,resourceController.getMostDownloadedBooks);
+router.get('/getMostRatedBooks', isAuthenticated,resourceController.getMostRatedBooks);
+router.get('/search', isAuthenticated,resourceController.getSearchAndFilterResources);
+router.get('/tags', isAuthenticated,resourceController.getTags);
 
 module.exports = router;

@@ -155,9 +155,9 @@ exports.uploadResource = async (req, res) => {
         await newResource.save();
 
         const user = await User.findById(req.user.id);
-        console.log(user);
-        console.log(newResource);
-        user.uploadedResources.push(newResource._id);
+        user.publishedResources.push(newResource._id);
+
+        await user.save();
 
         res.render('ResourceSuccess', {
             title: 'Resource Uploaded Successfully',
@@ -253,7 +253,6 @@ exports.getLatestBooks = async (req, res) => {
     try {
         const resources = await Resource.find({ accessLevel: 'public' })
             .sort({ createdAt: -1 }) 
-            .limit(10);
         
         const userLikes = req.user.likes.map(like => like.toString());
         
@@ -273,7 +272,6 @@ exports.getMostViewedBooks = async (req, res) => {
     try {
         const resources = await Resource.find({ accessLevel: 'public' })
             .sort({ views: -1 })  
-            .limit(10);
         
         const userLikes = req.user.likes.map(like => like.toString());
         
@@ -293,7 +291,6 @@ exports.getMostDownloadedBooks = async (req, res) => {
     try {
         const resources = await Resource.find({ accessLevel: 'public' })
             .sort({ downloads: -1 })  
-            .limit(10);
         
         const userLikes = req.user.likes.map(like => like.toString());
         
@@ -309,4 +306,94 @@ exports.getMostDownloadedBooks = async (req, res) => {
     }
 };
 
+exports.getMostRatedBooks = async (req, res) => {
+    try {
+        const resources = await Resource.find({ accessLevel: 'public' })
+            .sort({ averageRating: -1 })  
+        
+        const userLikes = req.user.likes.map(like => like.toString());
+        
+        const resourcesWithLikes = resources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+        
+        res.render('Dashboard', { title: 'Resources', user: req.user, resources: resourcesWithLikes });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
+}
+
+exports.getSearchAndFilterResources = async (req, res) => {
+    try {
+        const { search, tags, author, subject, accessLevel, minRating } = req.query;
+        let query = {};
+
+        if (search) {
+            query.$or = [
+                { title: { $regex: search, $options: 'i' } },
+                { description: { $regex: search, $options: 'i' } },
+                { author: { $regex: search, $options: 'i' } },
+                { subject: { $regex: search, $options: 'i' } },
+                { tags: { $regex: search, $options: 'i' } }
+            ];
+        }
+
+        if (tags && tags !== 'All') { // Check if tags are provided and not "all"
+            const tagArray = tags.split(',').map(tag => tag.trim());
+            query.tags = { $in: tagArray };
+        }
+
+        if (author) {
+            query.author = { $regex: author, $options: 'i' };
+        }
+
+        if (subject) {
+            query.subject = { $regex: subject, $options: 'i' };
+        }
+
+        if (accessLevel) {
+            query.accessLevel = accessLevel;
+        }
+
+        if (minRating) {
+            query.averageRating = { $gte: parseFloat(minRating) };
+        }
+
+        let resources = await Resource.find(query)
+            .populate('ratings')
+            .populate('uploadedBy')
+            .exec();
+
+        const userLikes = req.user ? req.user.likes.map(like => like.toString()) : [];
+
+        const resourcesWithLikes = resources.map(resource => ({
+            ...resource.toObject(),
+            isLiked: userLikes.includes(resource._id.toString())
+        }));
+
+        res.render('Dashboard', { resources: resourcesWithLikes, user: req.user });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+};
+
+exports.getTags = async (req, res) => {
+    try {
+        const tags = await Resource.aggregate([
+            { $unwind: "$tags" },
+            { $group: { _id: "$tags", count: { $sum: 1 } } },
+            { $sort: { count: -1 } },
+            { $limit: 10 }
+        ]).exec();
+
+        res.json(tags.map(tag => tag._id));
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
+};
 
