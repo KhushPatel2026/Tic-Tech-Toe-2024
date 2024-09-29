@@ -496,7 +496,7 @@ body.sidebar-hidden .main-layout .sidebar {
           <div class="section-separator"></div>
 
           <div class=" link-section">
-            <a href="#" class="link-item red">
+            <a href="/logout" class="link-item red">
               <i class="uil uil-signout"></i>  Logout
             </a>
           </div>
@@ -505,9 +505,12 @@ body.sidebar-hidden .main-layout .sidebar {
   
       <div class="content-wrapper">
         <!-- Category List Here-->
-        <div class="category-list">
-          <button class="category-button active">All</button>
-        </div>
+        <form id="tag-filter-form" action="/resource/search" method="GET">
+            <div class="category-list" id="category-list">
+                <!-- Tags will be dynamically populated here -->
+            </div>
+        </form>
+
         
         <!-- Video List -->
         <div class="video-list">
@@ -602,6 +605,57 @@ function toggleLike(resourceId) {
     })
     .catch(error => console.error('Error:', error));
 }
+// Function to create category buttons
+const createCategoryButton = (tag) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'category-button';
+    button.setAttribute('data-tag', tag);
+    button.value = tag;
+    button.textContent = tag;
+
+    // Add click event listener to the button
+    button.addEventListener('click', function() {
+        // Remove 'active' class from all buttons and add to the clicked one
+        document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update the hidden input value
+        const selectedTag = this.getAttribute('data-tag');
+        document.getElementById('selected-tag').value = selectedTag;
+
+        // Submit the form
+        document.getElementById('tag-filter-form').submit();
+    });
+
+    return button;
+};
+
+// Fetch tags from the server
+fetch('/resource/tags')
+    .then(response => response.json())
+    .then(data => {
+        const categoryList = document.getElementById('category-list');
+        
+        // Create the "All" button
+        const allButton = createCategoryButton('All');
+        categoryList.appendChild(allButton);
+        
+        // Create buttons for each tag
+        data.forEach(tag => {
+            const tagButton = createCategoryButton(tag);
+            categoryList.appendChild(tagButton);
+        });
+    })
+    .catch(error => console.error('Error fetching tags:', error));
+
+// Add click event for the "All" button
+document.querySelector('.category-button.active').addEventListener('click', function() {
+    // Set the value of the hidden input and submit the form
+    document.getElementById('selected-tag').value = 'All';
+    document.getElementById('tag-filter-form').submit();
+});
+
   </script>
 </body>
 </html>

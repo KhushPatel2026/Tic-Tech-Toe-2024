@@ -1,30 +1,818 @@
-<h1>Upload a New Resource</h1>
-        <form action="/resource/add/upload" method="POST" enctype="multipart/form-data">
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Homepage Clone | CodingNepal</title>
+  <!-- Linking Unicons For Icons -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Open Sans", sans-serif;
+}
+
+:root {
+  --white-color: #fff;
+  --black-color: #000;
+  --light-white-color: #f0f0f0;
+  --light-gray-color: #e5e5e5;
+  --border-color: #ccc;
+  --primary-color: #3b82f6;
+  --secondary-color: #404040;
+  --overlay-dark-color: rgba(0, 0, 0, 0.6);
+  ---theme-dark-1: #2E073F;
+  ---theme-dark-2: #7A1CAC;
+  ---theme-dark-3: #AD49E1;
+  ---theme-dark-4: #EBD3F8;
+
+  --text-color-light: #000;
+  --text-color-dark: #fff;
+
+  --background-color-light: #000000; /* Background color for light mode */
+  --background-color-dark: #171717;
+
+}
+
+/* Color variables for dark theme */
+.dark-mode {
+  --white-color: #171717;
+  --black-color: #d4d4d4;
+  --light-white-color: #333;
+  --light-gray-color: #404040;
+  --border-color: #808080;
+  --secondary-color: #d4d4d4;
+
+  --text-color: var(--text-color-dark);
+  --background-color: var(--background-color-dark);
+
+  --text-color: var(--text-color-dark); /* Text color for dark mode */
+  --background-color: var(--background-color-dark); /* Background color for dark mode */
+}
+
+body {
+  background: var(--white-color);
+}
+
+.container {
+  display: flex;
+  overflow: hidden;
+  max-height: 100vh;
+  flex-direction: column;
+}
+
+header, .sidebar .nav-left, .category-list {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--white-color);
+}
+
+.navbar {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: space-between;
+}
+
+:where(.navbar, .sidebar) .nav-section {
+  gap: 1rem;
+}
+
+:where(.navbar, .sidebar) :where(.nav-section, .nav-logo, .search-form) {
+  display: flex;
+  align-items: center;
+}
+
+:where(.navbar, .sidebar) :where(.logo-image, .user-image) {
+  width: 32px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+:where(.navbar, .sidebar) .nav-section .nav-button {
+  border: none;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  background: none;
+  border-radius: 50%;
+  
+}
+
+.nav-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+:where(.navbar, .sidebar) .nav-section .nav-button:hover {
+  background: var(--light-gray-color) !important;
+}
+
+:where(.navbar, .sidebar) .nav-button i {
+  font-size: 1.5rem;
+  display: flex;
+  color: var(--black-color);
+  align-items: center;
+  justify-content: center;
+}
+
+:where(.navbar, .sidebar) .nav-logo {
+  display: flex;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+:where(.navbar, .sidebar) .nav-logo .logo-text {
+  color: var(--black-color);
+  font-size: 1.25rem;
+}
+
+.navbar .nav-center {
+  gap: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar .search-form {
+  flex: 1;
+  height: 40px;
+  max-width: 550px;
+}
+
+.navbar .search-form .search-input {
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  padding: 0 1rem;
+  outline: none;
+  color: var(--black-color);
+  background: var(--white-color);
+  border-radius: 3.1rem 0 0 3.1rem;
+  border: 1px solid var(--border-color);
+}
+
+.navbar .search-form .search-input:focus {
+  border-color: var(--primary-color);
+}
+
+.navbar .search-form .search-button {
+  height: 40px;
+  width: auto;
+  padding: 0 1.25rem;
+  border-radius: 0 3.1rem 3.1rem 0;
+  border: 1px solid var(--border-color);
+  border-left: 0;
+}
+
+.navbar .nav-center .mic-button {
+  background: var(--light-white-color);
+}
+
+.navbar .nav-right .search-button {
+  display: none;
+}
+
+.main-layout {
+  display: flex;
+  overflow-y: auto;
+  scrollbar-color: #a6a6a6 transparent;
+}
+
+.main-layout .sidebar {
+  width: 280px;
+  overflow: hidden;
+  padding: 0 0.7rem 0;
+  background: var(--white-color);
+}
+
+.main-layout .sidebar .nav-left {
+  display: none;
+  padding: 0.5rem 0.3rem;
+}
+
+body.sidebar-hidden .main-layout .sidebar {
+  width: 0;
+  padding: 0;
+}
+
+.sidebar .links-container {
+  padding: 1rem 0 2rem;
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar .links-container:hover {
+  scrollbar-color: #a6a6a6 transparent;
+}
+
+.sidebar .link-section .link-item {
+  display: flex;
+  color: var(--black-color);
+  white-space: nowrap;
+  align-items: center;
+  font-size: 0.938rem;
+  padding: 0.37rem 0.75rem;
+  margin-bottom: 0.25rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+.sidebar .link-section .red{
+  color: var(---theme-dark-2);
+  display: flex;
+  white-space: nowrap;
+  align-items: center;
+  font-size: 0.938rem;
+  padding: 0.37rem 0.75rem;
+  margin-bottom: 0.25rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+}
+
+
+.sidebar .link-section .link-item:hover {
+  background: var(--light-gray-color);
+}
+
+.sidebar .link-section .link-item i {
+  font-size: 1.4rem;
+  margin-right: 0.625rem;
+}
+
+.sidebar .link-section .section-title {
+  color: var(--black-color);
+  font-weight: 600;
+  font-size: 0.938rem;
+  margin: 1rem 0 0.5rem 0.5rem;
+}
+
+.sidebar .section-separator {
+  height: 1px;
+  margin: 0.64rem 0;
+  background: var(--light-gray-color);
+}
+
+.main-layout .content-wrapper {
+  padding: 0 1rem;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.content-wrapper .category-list {
+  overflow-x: auto;
+  gap: 0.75rem;
+  padding: 0.75rem 0 0.7rem;
+  scrollbar-width: none;
+}
+
+.category-list .category-button {
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.94rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  color: var(--black-color);
+  padding: 0.4rem 0.75rem;
+  background: var(--light-gray-color);
+}
+
+.category-list .category-button.active {
+  color: var(--white-color);
+  background: var(--black-color);
+  pointer-events: none;
+}
+
+.dark-mode .category-list .category-button.active {
+  filter: brightness(120%);
+}
+
+.category-list .category-button:not(.active):hover {
+  background: var(--border-color);
+}
+
+.content-wrapper .video-list {
+  display: grid; 
+  gap: 1rem;
+  padding: 1.25rem 0 4rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.video-list .video-card {
+  text-decoration: none;
+}
+
+.video-list .video-card .thumbnail-container {
+  position: relative;
+}
+
+.video-list .video-card .thumbnail {
+  width: 100%;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  aspect-ratio: 3 / 4;
+  background: var(--light-white-color);
+}
+
+.video-list .video-card .duration {
+  position: absolute;
+  right: 0.65rem;
+  bottom: 0.8rem;
+  color: #fff;
+  font-size: 0.875rem;
+  padding: 0 0.3rem;
+  border-radius: 0.3rem;
+  background: var(--overlay-dark-color);
+}
+
+.video-list .video-card .video-info {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.7rem 0.5rem;
+}
+
+.video-list .video-card .icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.video-list .video-card .title {
+  font-size: 1rem;
+  color: var(--black-color);
+  font-weight: 600;
+  line-height: 1.375;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.video-list .video-card:hover .title {
+  color: var(--primary-color);
+}
+
+.video-list .video-card p {
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+}
+
+.video-list .video-card .channel-name {
+  margin: 0.25rem 0 0.15rem;
+}
+
+/* Responsive media code for small devices */
+@media (max-width: 768px) {
+  .navbar .nav-center {
+    display: none;
+  }
+
+  .navbar .nav-right .search-button {
+    display: block;
+  }
+
+  .main-layout .screen-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 15;
+    width: 100%;
+    height: 100vh;
+    background: var(--overlay-dark-color);
+    transition: 0.2s ease;
+  }
+
+  body.sidebar-hidden .main-layout .screen-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .main-layout .sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 20;
+    height: 100vh;
+    transition: 0.2s ease;
+  }
+
+  body.sidebar-hidden .main-layout .sidebar {
+    left: -280px;
+  }
+
+  .main-layout .sidebar .nav-left {
+    display: flex;
+  }
+}
+
+
+h3{
+  margin-top: 10px;
+}
+
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+    margin: 40px 40px ;
+}
+
+/* Left Column */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 25%;
+}
+
+.left-column img {
+    width: 100%;
+    max-width: 150px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.left-column .stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Middle Column */
+.middle-column {
+    width: 50%;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.middle-column p {
+    margin-bottom: 10px;
+}
+
+.middle-column form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.middle-column textarea {
+    resize: vertical;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+/* Right Column */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 15%;
+}
+
+.bookmark-btn {
+    color: #fff;
+    padding: 10px 15px;
+    background-color: var(--button-bg-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.red1{
+    background-color: #5b5b5b;
+}
+
+.red1:hover{
+    background-color: #007bff;
+}
+
+.blue{
+    background-color: #007bff;
+}
+
+.blue:hover{
+    background-color: #5b5b5b;
+}
+
+.bk-width{
+    font-size: 1.5rem;
+}
+
+
+.profile-body {
+    max-height: 200px; /* Adjust height as per your design */
+    overflow-y: auto;
+}
+
+/* Hide scrollbar */
+.content-wrapper::-webkit-scrollbar {
+    display: none;
+}
+.profile-body {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+
+.sub-btn{
+    color: #fff;
+    padding: 10px 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .3s ease;
+}
+
+.sub-btn:hover{
+    background-color: #005dc0
+}
+
+.rating-input{
+    padding: 5px;
+    width: 20%;
+    height: 30px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+
+}
+
+.content-wrapper {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background: var(--background-color); /* Use the variable for background color */
+  color: var(--text-color); /* Use the variable for text color */
+  border-radius: 8px; 
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; 
+  max-height: 70vh; 
+  transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+h1 {
+  position: fixed;
+  font-size: 3rem;
+  margin-top: 80px;
+  margin-left: 380px;
+}
+
+.form-group {
+  margin-bottom: 20px; /* Space between form elements */
+}
+
+label {
+  display: block; /* Labels take full width */
+  margin-bottom: 8px; /* Space below labels */
+  color: #555; /* Slightly lighter color for labels */
+  font-weight: bold; /* Bold labels for better visibility */
+}
+
+input[type="text"],
+textarea,
+select,
+input[type="file"] {
+  width: 100%; /* Full width for inputs */
+  padding: 10px; /* Padding for inputs */
+  border: 1px solid #ccc; /* Border for inputs */
+  border-radius: 4px; /* Rounded borders */
+  box-sizing: border-box; /* Include padding and border in element's total width */
+}
+
+input[type="file"] {
+  padding: 0; /* Remove padding for file inputs */
+}
+
+textarea {
+  resize: vertical; /* Allow vertical resizing only */
+  height: 100px; /* Fixed height for text area */
+}
+
+button {
+  width: 100%; /* Full width for the button */
+  padding: 12px; /* Padding for button */
+  background-color: #007bff; /* Bootstrap primary color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded borders */
+  cursor: pointer; /* Pointer cursor for button */
+  font-size: 16px; /* Font size for button */
+  transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+@media (max-width: 600px) {
+  /* Adjustments for smaller screens */
+  .content-wrapper {
+      padding: 15px; /* Less padding on smaller screens */
+  }
+
+  button {
+      font-size: 14px; /* Smaller font size for buttons */
+  }
+}
+
+
+.form-content{
+  margin: 30px 30px;
+}
+
+.btn{
+  margin-bottom: 30px;
+}
+
+.light-mode {
+  --text-color: var(--text-color-light); /* Text color for light mode */
+  --background-color: var(--background-color-light); /* Background color for light mode */
+}
+
+
+.content-wrapper h1,
+.content-wrapper h3,
+.content-wrapper p,
+.content-wrapper label,
+.content-wrapper input,
+.content-wrapper textarea,
+.content-wrapper button {
+  color: var(--text-color); /* Use the variable for text color */
+}
+
+/* Background color for form elements */
+.content-wrapper input,
+.content-wrapper textarea {
+  background-color: var(--light-white-color); /* Background for inputs and textareas */
+  border: 1px solid var(--border-color); /* Border color */
+}
+
+/* Dark mode specific styles for inputs and textareas */
+.dark-mode .content-wrapper input,
+.dark-mode .content-wrapper textarea {
+  background-color: var(--black-color); /* Dark mode background */
+  color: var(--text-color); /* Text color for dark mode */
+  border: 1px solid var(--border-color); /* Border color */
+}
+
+/* Dark mode button styles */
+.dark-mode .content-wrapper button {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+}
+  </style>
+</head>
+<body class="sidebar-hidden">
+  <div class="container">
+    <!-- Header / Navbar -->
+    <header>
+      <nav class="navbar">
+        <div class="nav-section nav-left">
+          <button class="nav-button menu-button">
+            <i class="uil uil-bars"></i>
+          </button>
+          <a href="#" class="nav-logo">
+            <img src="./image/logo.png" alt="Logo" class="logo-image">
+            <h2 class="logo-text" href="#">EPixel</h2>
+            
+          </a>
+        </div>
+        <!-- Search box -->
+        <div class="nav-section nav-center">
+          <form action="#" class="search-form">
+            <input type="search" placeholder="Search" class="search-input" required> <!--Search box-->
+            <button class="nav-button search-button">
+              <i class="uil uil-search"></i>
+            </button>
+          </form>
+        </div>
+        
+        <div class="nav-section nav-right">
+          <button class="nav-button search-button">
+            <i class="uil uil-search"></i>
+          </button>
+          <button class="nav-button theme-button">
+            <i class="uil uil-moon"></i>
+          </button>
+          <img src="./image/logo.png" alt="User Image" class="user-image">
+        </div>
+      </nav>
+    </header>
+    
+    <!-- Main Layout -->
+    <main class="main-layout">
+      <div class="screen-overlay"></div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="nav-section nav-left">
+          <button class="nav-button menu-button">
+            <i class="uil uil-bars"></i>
+          </button>
+          <a href="#" class="nav-logo">
+            <img src="/image/logo.png" alt="Logo" class="logo-image">
+            <h2 class="logo-text">CnTube</h2>
+          </a>
+        </div>
+  
+        <div class="links-container">
+          <div class="link-section">
+            <a href="#" class="link-item">
+              <i class="uil uil-estate"></i> Home
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-bookmark"></i> Bookmarked
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-heart"></i> Liked
+            </a>
+          </div>
+          <div class="section-separator"></div>
+  
+
+
+          <div class="link-section">
+            <h4 class="section-title">For you</h4>
+            <a href="#" class="link-item">
+              <i class="uil uil-user-square"></i> Suggested for you
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-fire"></i> Popular 
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-tag"></i> New Arrival
+            </a>
+          </div>
+          <div class="section-separator"></div>
+          
+          <div class="link-section">
+            <a href="#" class="link-item">
+              <i class="uil uil-star"></i>  Ratings
+            </a>
+            <a href="#" class="link-item">
+              <i class="uil uil-comment" ></i> Feedback
+            </a>
+          </div>
+          <div class="section-separator"></div>
+
+          <div class=" link-section">
+            <a href="#" class="link-item red">
+              <i class="uil uil-signout"></i>  Logout
+            </a>
+          </div>
+        </div>
+      </aside>
+  
+      <div class="content-wrapper">
+
+
+        <form action="/resource/add/upload" method="POST" class="form-content" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Resource Title</label>
                 <input type="text" id="title" name="title" required placeholder="Enter the resource title">
             </div>
-
-            <div class="form-group">
-                <label for="author">Author</label>
-                <input id="author" name="author" placeholder="Enter a author"></input>
-            </div>
-
+    
             <div class="form-group">
                 <label for="description">Description</label>
                 <textarea id="description" name="description" placeholder="Enter a description"></textarea>
             </div>
-
+    
             <div class="form-group">
                 <label for="subject">Subject</label>
                 <input type="text" id="subject" name="subject" required placeholder="Enter the subject">
             </div>
-
+    
             <div class="form-group">
                 <label for="tags">Tags (comma-separated)</label>
                 <input type="text" id="tags" name="tags" placeholder="e.g., Math, Science, History">
             </div>
-
+    
             <div class="form-group">
                 <label for="accessLevel">Access Level</label>
                 <select id="accessLevel" name="accessLevel">
@@ -33,16 +821,114 @@
                     <option value="restricted">Restricted</option>
                 </select>
             </div>
-
+    
             <div class="form-group">
                 <label for="pdfFile">Upload PDF File</label>
                 <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required>
             </div>
-
+    
             <div class="form-group">
                 <label for="imageFile">Upload Cover Image</label>
                 <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
             </div>
-
+    
             <button type="submit" class="btn">Upload Resource</button>
         </form>
+
+        <h1>Upload a<br>New Resource</h1>
+    </div>
+    
+    
+    
+    </main>
+  </div>
+
+  <!-- Linking custom script -->
+  <script>
+    const menuButtons = document.querySelectorAll(".menu-button");
+const screenOverlay = document.querySelector(".main-layout .screen-overlay");
+const themeButton = document.querySelector(".navbar .theme-button i");
+
+// Toggle sidebar visibility when menu buttons are clicked
+menuButtons.forEach(button => {
+button.addEventListener("click", () => {
+document.body.classList.toggle("sidebar-hidden");
+});
+});
+
+// Toggle sidebar visibility when screen overlay is clicked
+screenOverlay.addEventListener("click", () => {
+document.body.classList.toggle("sidebar-hidden");
+});
+
+// Initialize dark mode based on localStorage
+if (localStorage.getItem("darkMode") === "enabled") {
+document.body.classList.add("dark-mode");
+themeButton.classList.replace("uil-moon", "uil-sun");
+} else {
+themeButton.classList.replace("uil-sun", "uil-moon");
+}
+
+// Toggle dark mode when theme button is clicked
+themeButton.addEventListener("click", () => {
+const isDarkMode = document.body.classList.toggle("dark-mode");
+localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+themeButton.classList.toggle("uil-sun", isDarkMode);
+themeButton.classList.toggle("uil-moon", !isDarkMode);
+});
+
+// Show sidebar on large screens by default
+if (window.innerWidth >= 768) {
+document.body.classList.remove("sidebar-hidden");
+}
+document.querySelector('.add-btn').addEventListener('click', function() {
+    const preferenceSelect = document.getElementById('preference-select');
+    const selectedPreference = preferenceSelect.value;
+    
+    if (selectedPreference) {
+      const ul = document.querySelector('.book-preferences');
+      const li = document.createElement('li');
+      li.innerHTML = `${selectedPreference} <button class="delete-btn"><i class="uil uil-trash"></i></button>`;
+      ul.appendChild(li);
+      preferenceSelect.value = ''; // Reset the dropdown
+      addDeleteFunctionality(); // Add delete functionality for new buttons
+    } else {
+      alert('Please select a preference to add.'); // Alert if no preference is selected
+    }
+  });
+  
+  function addDeleteFunctionality() {
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        this.parentElement.remove();
+      });
+    });
+  }
+  
+  addDeleteFunctionality(); // Add initially
+
+  const toggleSwitch = document.querySelector('.toggle-switch'); // Your toggle switch element
+
+toggleSwitch.addEventListener('change', () => {
+  document.body.classList.toggle('dark-mode');
+  document.body.classList.toggle('light-mode');
+
+  // Store the mode preference in local storage
+  if (document.body.classList.contains('dark-mode')) {
+    localStorage.setItem('theme', 'dark');
+  } else {
+    localStorage.setItem('theme', 'light');
+  }
+});
+
+// Load the theme from local storage if it exists
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+  document.body.classList.add(currentTheme);
+}
+
+  
+  </script>
+</body>
+</html>
